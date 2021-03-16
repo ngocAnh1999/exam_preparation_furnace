@@ -3,6 +3,8 @@ class CreateSchools < ActiveRecord::Migration[6.0]
     create_table :schools do |t|
       t.string :name, null: false
       t.string :location, null: false
+
+      t.timestamps
     end
   end
 end

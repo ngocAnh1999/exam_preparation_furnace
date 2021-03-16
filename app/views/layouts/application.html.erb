@@ -10,6 +10,9 @@
   </head>
 
   <body>
+    <%= link_to "English", locale:"en" %>
+    <%= link_to "Vietnamese", locale:"vi" %>
+    <%= render partial: "shared_example/flash_message" %>
     <%= yield %>
   </body>
 </html>
