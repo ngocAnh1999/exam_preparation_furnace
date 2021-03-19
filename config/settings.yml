@@ -1,0 +1,4 @@
+user:
+  basic_type:
+    - Teacher
+    - Student

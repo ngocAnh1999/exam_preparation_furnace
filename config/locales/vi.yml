@@ -1,2 +1,8 @@
 vi:
   hello: "Xin chào thế giới!"
+  select_role_register: "Đăng ký với tài khoản %{role}"
+  users:
+    type:
+      select_teacher_register: "Đăng ký với tài khoản giáo viên"
+      select_student_register: "Đăng ký với tài khoản học sinh"
+      select_school_admin_register: "Đăng ký với tài khoản trường học"
