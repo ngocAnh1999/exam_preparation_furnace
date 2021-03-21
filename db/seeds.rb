@@ -15,6 +15,14 @@ school_admin = SchoolAdmin.find_or_create_by(username: "thpt_tamduong") do |user
   user.password = "Aa@123456"
 end
 
+# create school
+school = School.find_or_create_by(name: "Trung Hoc Pho Thong Tam Duong") do |s|
+  s.location = "Tam Duong, Vinh Phuc, Viet Nam"
+end
+
+# create admin user_school
+user_school = school.user_schools.find_or_create_by(user_id: school_admin.id)
+
 # create teacher
 (1..3).each do |n|
   teacher = Teacher.find_or_create_by(username: "teacher#{n}") do |user|
@@ -24,6 +32,8 @@ end
     user.phone = Faker::PhoneNumber.cell_phone_in_e164
     user.password = "Aa@123456"
   end
+
+  teacher.user_schools.find_or_create_by(school_id: school.id)
 end
 
 # create student
@@ -35,15 +45,14 @@ end
     user.phone = Faker::PhoneNumber.cell_phone_in_e164
     user.password = "Aa@123456"
   end
+
+  student.user_schools.find_or_create_by(school_id: school.id)
 end
 
-# create school
-school = School.find_or_create_by(name: "Trung Hoc Pho Thong Tam Duong") do |s|
-  s.location = "Tam Duong, Vinh Phuc, Viet Nam"
-end
-
-# create user_school
-user_school = school.user_schools.find_or_create_by(user_id: school_admin.id)
+# Mark
+school.marks.find_or_create_by(name: "Điểm hệ số 1", rate: 1)
+school.marks.find_or_create_by(name: "Điểm hệ số 2", rate: 2)
+school.marks.find_or_create_by(name: "Điểm hệ số 3", rate: 3)
 
 # create semester
 current_year = DateTime.now.year
@@ -78,3 +87,8 @@ subjects.each do |value|
     section_class = study_class.section_classes.find_or_create_by(subject_id: subject.id)
   end
 end
+
+# Teacher math
+Teacher.first.teacher_section_classes.find_or_create_by(section_class_id: SectionClass.first.id)
+Teacher.first.teacher_section_classes.find_or_create_by(section_class_id: SectionClass.second.id)
+Teacher.second.teacher_section_classes.find_or_create_by(section_class_id: SectionClass.second.id)

@@ -1,0 +1,33 @@
+<div class="dropdown tab-content gutter-ys">
+  <button class="btn btn-secondary dropdown-toggle shadow-lg ml-0 border border-sidebar" type="button"
+    id="dropdownMenuButton" data-toggle="dropdown"
+    aria-haspopup="true" aria-expanded="false">
+    Tao cau hoi
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <li class="dropdown-item add-multi-choice">Trac nghiem</li>
+    <li class="dropdown-item add-essay">Tu luan</li>
+  </ul>
+</div>
+<div class="border-bottom border-sidebar gutter-ys"></div>
+
+<script>
+  $('.add-multi-choice').on('click', function() {
+    $('.title-multichoice.d-none').removeClass('d-none');
+    $('#multi-choice-question-partial').append('<%= j render "form_multichoice_question", f: f %>');
+  })
+
+  $('.add-essay').on('click', function() {
+    $('.title-essay.d-none').removeClass('d-none');
+    $('#essay-question-partial').append('<%= j render "form_essay_question", f: f %>');
+  })
+
+  $('.add-multi-choice, .add-essay').on('click', function() {
+    $.each($('p.title-question'), function(index, element) {
+      $(element).html('Câu '+ (index+1) + ':')
+    })
+
+    let number = $('#list-question-card a').length + 1;
+    $('#list-question-card').append(`<%= link_to "#", class: "btn btn-fab btn-round btn-white mr-1" do %> ${number} <% end %>`)
+  })
+</script>

@@ -8,6 +8,28 @@
   margin: 0.5rem 0;
 }
 
+.padding-ys {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.padding-xs {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
 .border-sidebar {
   border-color: $blue-grey;
+}
+
+.add-multi-choice, .add-essay, .delete-ans {
+  cursor: pointer;
+}
+
+label {
+  color: $blue-grey-primary !important;
+}
+
+.fix_label {
+  margin-bottom: 13px;
 }
