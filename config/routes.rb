@@ -7,7 +7,8 @@ Rails.application.routes.draw do
     devise_for :users, skip: :omniauth_callbacks,
     controllers: {
       sessions: 'users/sessions',
-      registrations: 'users/registrations'
+      registrations: 'users/registrations',
+      passwords: 'users/passwords'
     },
     path: 'auth', path_names: {
       sign_in: 'login',
@@ -19,5 +20,10 @@ Rails.application.routes.draw do
       sign_up: 'cmon_let_me_in' }
 
     resources :users
+    namespace :teachers do
+      root to: "draft_tests#index"
+
+      resources :draft_tests
+    end
   end
 end
