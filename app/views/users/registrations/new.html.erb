@@ -8,17 +8,6 @@
           <div class="card-title">
             <%= render "users/shared/links" %>
           </div>
-          <div class="social-line">
-            <%= link_to "#pablo", class: "btn btn-just-icon btn-link" do %>
-              <i class="fa fa-facebook-square"></i>
-            <% end %>
-            <%= link_to "#pablo", class: "btn btn-just-icon btn-link" do %>
-              <i class="fa fa-twitter"></i>
-            <% end %>
-            <%= link_to "#pablo", class: "btn btn-just-icon btn-link" do %>
-              <i class="fa fa-google-plus"></i>
-            <% end %>
-          </div>
         </div>
         <h3 class="description text-center">Sign up</h3>
         <div class="card-body">
@@ -29,7 +18,10 @@
               </span>
             </div>
             <%= f.select :type, options_for_select(option_select_roles),{},
-              class: "form-control selectpicker" %>
+              class: "form-control selectpicker", "data-style": "btn btn-link" %>
+            <span class="input-group-btn">
+              <i class="material-icons">expand_more</i>
+            </span>
           </div>
 
           <div class="input-group">
