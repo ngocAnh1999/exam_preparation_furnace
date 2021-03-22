@@ -1,0 +1,2 @@
+class TeacherSectionClass < ApplicationRecord
+end

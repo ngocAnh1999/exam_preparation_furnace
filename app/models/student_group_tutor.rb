@@ -1,0 +1,2 @@
+class StudentGroupTutor < ApplicationRecord
+end

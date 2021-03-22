@@ -1,0 +1,2 @@
+class StudentSectionClass < ApplicationRecord
+end
