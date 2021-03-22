@@ -11,7 +11,7 @@ class Users::SessionsController < Devise::SessionsController
 
   def after_sign_in_path_for user
     flash[:success] = t "devise.sessions.signed_in"
-    return teachers_path if user&.Teacher?
+    return teachers_root_path if user&.Teacher?
 
     root_path
   end

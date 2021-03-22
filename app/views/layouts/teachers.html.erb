@@ -12,25 +12,13 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body class="index-page sidebar-wrapper">
+  <body class="index-page sidebar-wrapper bg-white">
     <%= render partial: "shared_example/headers" %>
     <%= custom_bootstrap_flash %>
-    <div class="main main-raised mt-0">
+    <div class="main">
       <div class="row mx-0">
-        <nav class="sidebar col-md-2">
-          <nav class="nav nav-pills flex-column">
-            <%= link_to "#", class: "btn btn-primary btn-round" do %>
-              demo1
-            <% end %>
-            <%= link_to "#", class: "btn btn-round" do %>
-              demo2
-            <% end %>
-            <%= link_to "#", class: "btn btn-round" do %>
-              demo3
-            <% end %>
-          </nav>
-        </nav>
-        <div class="col border-left-1 border-light">
+        <%= render partial: "teachers/sidebar" %>
+        <div class="col">
           <%= yield %>
         </div>
       </div>
