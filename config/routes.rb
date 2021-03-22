@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount Ckeditor::Engine => '/ckeditor'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   scope "(:locale)", locale: /en|vi/ do
     get "/", to: "home#index"
@@ -23,7 +24,9 @@ Rails.application.routes.draw do
     namespace :teachers do
       root to: "draft_tests#index"
 
-      resources :draft_tests
+      resources :draft_tests do
+        get :search_chapters, on: :collection
+      end
     end
   end
 end

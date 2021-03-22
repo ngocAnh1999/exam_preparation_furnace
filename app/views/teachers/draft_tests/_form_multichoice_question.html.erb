@@ -1,0 +1,20 @@
+<div class="form-group">
+  <p class="title-question"></p>
+  <%= f.cktext_area 'draft_test[questions][][content]', class: "form-control", id: secure_random_id %>
+  <%= f.hidden_field 'draft_test[questions][][type]', value: :multiple_choice %>
+</div>
+<div class="form-group">
+  <p>Đáp án</p>
+  <div class="group-ans">
+    <%= render 'field_answer', f: f %>
+  </div>
+  <button class="btn btn-white shadow-lg border border-sidebar ml-auto add-ans" type="button">
+    <i class="material-icons">add</i>
+  </button>
+</div>
+
+<script>
+  $('.add-ans').on('click', function() {
+    $(this).parent().children('.group-ans').append('<%= j render 'field_answer', f: f %>');
+  })
+</script>
