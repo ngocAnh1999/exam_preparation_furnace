@@ -3,7 +3,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   USER_PARAMS = %i[username first_name last_name type email phone password password_confirmation remember_me].freeze
 
-  has_many :user_schools
+  has_many :user_schools, dependent: :destroy
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :lockable

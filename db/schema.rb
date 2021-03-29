@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_23_075237) do
+ActiveRecord::Schema.define(version: 2021_03_29_041703) do
 
   create_table "answers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "content"
@@ -26,9 +26,11 @@ ActiveRecord::Schema.define(version: 2021_03_23_075237) do
   create_table "chapters", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name"
     t.bigint "level_id", null: false
+    t.bigint "subject_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["level_id"], name: "index_chapters_on_level_id"
+    t.index ["subject_id"], name: "index_chapters_on_subject_id"
   end
 
   create_table "draft_tests", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -45,25 +47,37 @@ ActiveRecord::Schema.define(version: 2021_03_23_075237) do
     t.bigint "chapter_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "mark_id"
     t.index ["chapter_id"], name: "index_draft_tests_on_chapter_id"
+    t.index ["mark_id"], name: "index_draft_tests_on_mark_id"
     t.index ["teacher_id"], name: "index_draft_tests_on_teacher_id"
   end
 
   create_table "group_tutors", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name", null: false
-    t.string "subject", null: false
     t.bigint "teacher_id", null: false
+    t.bigint "subject_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["subject_id"], name: "index_group_tutors_on_subject_id"
     t.index ["teacher_id"], name: "index_group_tutors_on_teacher_id"
   end
 
   create_table "levels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name"
-    t.bigint "subject_id", null: false
+    t.bigint "school_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["subject_id"], name: "index_levels_on_subject_id"
+    t.index ["school_id"], name: "index_levels_on_school_id"
+  end
+
+  create_table "marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "name", null: false
+    t.decimal "rate", precision: 5, scale: 2, null: false
+    t.bigint "school_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["school_id"], name: "index_marks_on_school_id"
   end
 
   create_table "question_tests", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -144,11 +158,12 @@ ActiveRecord::Schema.define(version: 2021_03_23_075237) do
 
   create_table "study_classes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name", null: false
-    t.integer "grade"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "semesters_id"
-    t.index ["semesters_id"], name: "index_study_classes_on_semesters_id"
+    t.bigint "semester_id"
+    t.bigint "level_id"
+    t.index ["level_id"], name: "index_study_classes_on_level_id"
+    t.index ["semester_id"], name: "index_study_classes_on_semester_id"
   end
 
   create_table "subjects", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -193,7 +208,9 @@ ActiveRecord::Schema.define(version: 2021_03_23_075237) do
     t.bigint "chapter_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "mark_id"
     t.index ["chapter_id"], name: "index_tests_on_chapter_id"
+    t.index ["mark_id"], name: "index_tests_on_mark_id"
     t.index ["teacher_id"], name: "index_tests_on_teacher_id"
   end
 
@@ -236,7 +253,10 @@ ActiveRecord::Schema.define(version: 2021_03_23_075237) do
   add_foreign_key "answers", "questions"
   add_foreign_key "draft_tests", "chapters"
   add_foreign_key "draft_tests", "users", column: "teacher_id"
+  add_foreign_key "group_tutors", "subjects"
   add_foreign_key "group_tutors", "users", column: "teacher_id"
+  add_foreign_key "levels", "schools"
+  add_foreign_key "marks", "schools"
   add_foreign_key "question_tests", "questions"
   add_foreign_key "question_tests", "tests"
   add_foreign_key "questions", "users", column: "teacher_id"
@@ -249,7 +269,7 @@ ActiveRecord::Schema.define(version: 2021_03_23_075237) do
   add_foreign_key "student_section_classes", "users", column: "student_id"
   add_foreign_key "student_study_classes", "study_classes"
   add_foreign_key "student_study_classes", "users", column: "student_id"
-  add_foreign_key "study_classes", "semesters", column: "semesters_id"
+  add_foreign_key "study_classes", "semesters"
   add_foreign_key "subjects", "schools"
   add_foreign_key "teacher_section_classes", "section_classes"
   add_foreign_key "teacher_section_classes", "users", column: "teacher_id"
