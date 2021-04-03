@@ -1,0 +1,47 @@
+<nav class="navbar navbar-expand-lg bg-primary">
+  <div class="container">
+    <div class="navbar-translate">
+      <%= link_to "Exam Preparation Furnace", "#", class: "navbar-brand" %>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="navbar-toggler-icon"></span>
+        <span class="navbar-toggler-icon"></span>
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <%= link_to "#", class: "nav-link" do %>
+            <i class="material-icons">notifications_active</i>
+          <% end %>
+        </li>
+        <li class="active nav-item">
+          <%= link_to "", locale:"en", class: "nav-link" do %>
+            Eng
+            <div class="ripple-container"></div>
+          <% end %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "", locale:"vi", class: "nav-link" do %>
+            Vie
+            <div class="ripple-container"></div>
+          <% end %>
+        </li>
+        <li class="dropdown nav-item">
+          <%= link_to "#", class: "dropdown-toggle nav-link", "data-toggle": "dropdown", "aria-expanded": "false" do %>
+            <i class="material-icons">account_circle</i>
+            Teacher Name
+            <b class="caret"></b>
+            <div class="ripple-container"></div>
+          <% end %>
+          <div class="dropdown-menu dropdown-menu-right">
+            <%= link_to "Profile", "#", class: "dropdown-item" %>
+            <div class="dropdown-divider"></div>
+            <%= link_to "Logout", "#", class: "dropdown-item" %>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
