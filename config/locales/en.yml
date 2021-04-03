@@ -31,3 +31,8 @@
 
 en:
   hello: "Hello world"
+  users:
+    type:
+      select_teacher_register: "Register with teacher account"
+      select_student_register: "Register with student account"
+      select_school_admin_register: "Register with school admin account"

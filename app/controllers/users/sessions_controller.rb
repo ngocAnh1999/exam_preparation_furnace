@@ -4,8 +4,20 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   def create
-    super do |resource|
-      BackgroundWorker.trigger(resource)
-    end
+    super
+  end
+
+  private
+
+  def after_sign_in_path_for user
+    flash[:success] = t "devise.sessions.signed_in"
+    return teachers_path if user&.Teacher?
+
+    root_path
+  end
+
+  def after_sign_out_path_for _user
+    flash[:success] = t "devise.sessions.signed_out"
+    new_user_session_path
   end
 end

@@ -25,7 +25,7 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  config.action_mailer.default_url_options = { host: ENV['HOST'], port: 3000 }
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
@@ -53,4 +53,14 @@ Rails.application.configure do
 
   # Allow connections to local server.
   config.hosts.clear
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :user_name => ENV['MAILTRAP_USERNAME'],
+    :password => ENV['MAILTRAP_PASSWORD'],
+    :address => ENV['MAILTRAP_ADDRESS'],
+    :domain => ENV['MAILTRAP_DOMAIN'],
+    :port => '2525',
+    :authentication => :cram_md5
+  }
 end
