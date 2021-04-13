@@ -8,4 +8,5 @@ class Teacher < User
   has_many :levels, through: :classes
   has_many :tests, dependent: :destroy
   has_many :questions, dependent: :destroy
+  has_many :draft_tests, dependent: :destroy
 end
