@@ -7,7 +7,7 @@
       <% end %>
     <% end %>
     <div class="form-group bmd-form-group ml-auto">
-      <%= link_to new_teachers_draft_test_path, class: "btn btn-white btn-fab btn-round",
+      <%= link_to teachers_draft_tests_path, method: :post, class: "btn btn-white btn-fab btn-round btn-lg shadow",
         "data-toggle": "tooltip", "data-placement": "right", title: "Tao de moi",
         "data-container": "body", "data-original-title": "Tao de moi" do %>
         <i class="material-icons text-success">post_add</i>
@@ -22,15 +22,16 @@
     -->
     <li class="nav-item">
       <a class="nav-link active" href="#created_test" role="tab" data-toggle="tab">
-        De da tao
+        Đề đã tạo
       </a>
     </li>
     <li class="nav-item">
-      <%= link_to "De nhap", "#draft_test", class: "nav-link", role: "tab", "data-toggle": "tab", id: "index_draft_test" %>
+      <%= link_to "Đề nháp", "#draft_test", class: "nav-link", role: "tab",
+        "data-toggle": "tab", id: "index_draft_test" %>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="#shared_test" role="tab" data-toggle="tab">
-        De duoc chia se
+        Đề được chia sẻ
       </a>
     </li>
   </ul>
@@ -44,6 +45,7 @@
     </div>
   </div>
 </div>
+<div id="loading-svg"><div>
 
 <script>
   $('#index_draft_test').on('click', () => {
@@ -52,10 +54,11 @@
         url: "<%= teachers_draft_tests_path %>",
         method: 'GET',
         beforeSend:()=>{
-          console.log("view index draft_test")
+          $('#loading-svg').html(`<%= show_svg('loading.svg') %>`);
         },
         success:(response)=>{
           $('#draft_test').html(response);
+          $('#loading-svg').html("");
         }
       })
     }

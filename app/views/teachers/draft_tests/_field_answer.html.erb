@@ -1,21 +1,17 @@
 <div class="input-group">
   <div class="form-check-inline">
     <label class="form-check-label pl-0">
-      <%= f.check_box 'draft_test[questions][][answers_attributes][][is_correct]',
+      <%= check_box_tag 'draft_test[questions][][answers_attributes][][is_correct]',
+        answer['is_correct'], answer['is_correct'].present?,
         class: "form-check-input" %>
       <span class="form-check-sign">
         <span class="check"></span>
       </span>
     </label>
   </div>
-  <%= f.text_field 'draft_test[questions][][answers_attributes][][content]',
+  <%= text_field_tag 'draft_test[questions][][answers_attributes][][content]', answer['content'],
     class: "form-control", id: "answer_content" %>
-  <i class="material-icons delete-ans cursor-pointer p-2">backspace</i>
+  <%= hidden_field_tag 'draft_test[questions][][answers_attributes][][position]', answer['position'] %>
+  <i class="material-icons cursor-pointer p-2"
+    onclick="DeleteAnswer(this);">backspace</i>
 </div>
-
-<script>
-  $('.delete-ans').on('click', function(e) {
-    $(this).parent().append(`<%= f.hidden_field 'draft_test[questions][][answers_attributes][][_destroy]', value: 1 %>`)
-    $(this).parent().fadeOut();
-  })
-</script>

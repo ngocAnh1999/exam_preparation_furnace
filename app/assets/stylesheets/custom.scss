@@ -22,7 +22,7 @@
   border-color: $blue-grey;
 }
 
-.add-multi-choice, .add-essay, .delete-ans {
+.cursor-pointer {
   cursor: pointer;
 }
 
@@ -32,4 +32,18 @@ label {
 
 .fix_label {
   margin-bottom: 13px;
+}
+
+.material-icons.trash-color {
+  color: $dangerous;
+}
+
+.sticky-taskbar, ul.sticky-taskbar {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 6rem;
+}
+
+svg {
+  width: 8rem;
 }

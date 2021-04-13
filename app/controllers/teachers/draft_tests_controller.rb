@@ -1,5 +1,6 @@
 class Teachers::DraftTestsController < TeachersController
-  before_action :load_references, only: :new
+  skip_before_action :verify_authenticity_token, :only => [:update]
+  before_action :load_draft_test, only: %i[edit update]
 
   def index
     @draft_tests = current_user.draft_tests.page params[:page]
@@ -8,12 +9,30 @@ class Teachers::DraftTestsController < TeachersController
 
   def new
     @draft_test = DraftTest.new
-    @question = Question.new
-    @answer = @question.answers.build
   end
 
   def create
-    binding.pry
+    @draft_test = current_user.draft_tests.build questions: []
+    if @draft_test.save
+      redirect_to edit_teachers_draft_test_path(id: @draft_test.id)
+    else
+      flash[:alert] = "Create failed!"
+      redirect_to teachers_tests_path
+    end
+  end
+
+  def show; end
+
+  def edit; end
+
+  def update
+    respond_to do |format|
+      if @draft_test.update draft_test_params
+        format.json { render json: { updated_at: l(@draft_test.updated_at, format: :default) } }
+      else
+        format.html { render :edit, notice: "error message" }
+      end
+    end
   end
 
   def search_chapters
@@ -24,6 +43,10 @@ class Teachers::DraftTestsController < TeachersController
   end
 
   private
+
+  def load_draft_test
+    @draft_test = current_user.draft_tests.find_by id: params[:id]
+  end
 
   def load_references
     @list_subjects = current_user.subjects.uniq.pluck(:name, :id)
@@ -36,12 +59,10 @@ class Teachers::DraftTestsController < TeachersController
       :start_time,
       :due_time,
       :doing_time,
-      :chapter_id,
       :shuffle_count,
       :title,
       :description,
       :unlimited_flag,
-      :mark_id,
       questions: [
         :content,
         :suggestion,
@@ -50,6 +71,4 @@ class Teachers::DraftTestsController < TeachersController
       ]
     )
   end
-  # params[:draft_test][:questions][][:content]
-  # params[:draft_test][:questions][][:answers][][:content]
 end
