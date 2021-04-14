@@ -4,6 +4,7 @@ class School < ApplicationRecord
   has_many :semesters, dependent: :destroy
   has_many :subjects, dependent: :destroy
   has_many :levels, dependent: :destroy
+  has_many :marks, dependent: :destroy
 
   delegate :teachers, :students, :school_admins, to: :users
 end

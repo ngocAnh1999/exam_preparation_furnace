@@ -6,3 +6,22 @@ vi:
       select_teacher_register: "Đăng ký với tài khoản giáo viên"
       select_student_register: "Đăng ký với tài khoản học sinh"
       select_school_admin_register: "Đăng ký với tài khoản trường học"
+  views:
+    pagination:
+      first: "&laquo; Dau"
+      last: "Cuoi &raquo;"
+      previous: "&lsaquo; Truoc"
+      next: "Sau &rsaquo;"
+      truncate: "&hellip;"
+  helpers:
+    page_entries_info:
+      one_page:
+        display_entries:
+          zero: "Khong co %{entry_name} duoc tim thay"
+          one: "Hien thi <b>1</b> %{entry_name}"
+          other: "Hien thi <b>tat ca %{count}</b> %{entry_name}"
+      more_pages:
+        display_entries: "Hien thi %{entry_name} <b>%{first}&nbsp;-&nbsp;%{last}</b> of <b>%{total}</b> trong tong"
+  time:
+    formats:
+      default: "%A, %d %B, %Y %I:%M:%S %p"

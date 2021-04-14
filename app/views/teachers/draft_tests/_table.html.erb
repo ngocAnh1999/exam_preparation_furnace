@@ -1,0 +1,20 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th class="text-center">#</th>
+      <th>Ten de bai</th>
+      <th>Mon</th>
+      <th>Mo ta</th>
+      <th>Ngay bat dau</th>
+      <th>Ngay ket thuc</th>
+      <th>Thoi gian lam</th>
+      <th>Ngay tao</th>
+      <th class="text-right">Hanh dong</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render partial: "draft_test", collection: @draft_tests, as: :draft_test, locals: {subject: current_user.subjects.first.name} %>
+  </tbody>
+</table>
+
+<%= paginate @draft_tests %>
