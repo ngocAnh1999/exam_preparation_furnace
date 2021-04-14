@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_29_041703) do
+ActiveRecord::Schema.define(version: 2021_03_30_043422) do
 
-  create_table "answers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "answers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "content"
     t.boolean "is_correct"
     t.string "content_image"
@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 2021_03_29_041703) do
     t.index ["question_id"], name: "index_answers_on_question_id"
   end
 
-  create_table "chapters", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "chapters", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.bigint "level_id", null: false
     t.bigint "subject_id", null: false
@@ -33,9 +33,19 @@ ActiveRecord::Schema.define(version: 2021_03_29_041703) do
     t.index ["subject_id"], name: "index_chapters_on_subject_id"
   end
 
-  create_table "draft_tests", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "ckeditor_assets", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "data_file_name", null: false
+    t.string "data_content_type"
+    t.integer "data_file_size"
+    t.string "type", limit: 30
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["type"], name: "index_ckeditor_assets_on_type"
+  end
+
+  create_table "draft_tests", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "title"
-    t.json "content_data"
+    t.json "questions"
     t.integer "difficulty"
     t.string "description"
     t.datetime "start_time"
@@ -44,16 +54,12 @@ ActiveRecord::Schema.define(version: 2021_03_29_041703) do
     t.integer "shuffle_count", default: 1, null: false
     t.boolean "unlimited_flag", default: false
     t.bigint "teacher_id", null: false
-    t.bigint "chapter_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "mark_id"
-    t.index ["chapter_id"], name: "index_draft_tests_on_chapter_id"
-    t.index ["mark_id"], name: "index_draft_tests_on_mark_id"
     t.index ["teacher_id"], name: "index_draft_tests_on_teacher_id"
   end
 
-  create_table "group_tutors", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "group_tutors", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
     t.bigint "teacher_id", null: false
     t.bigint "subject_id", null: false
@@ -63,7 +69,7 @@ ActiveRecord::Schema.define(version: 2021_03_29_041703) do
     t.index ["teacher_id"], name: "index_group_tutors_on_teacher_id"
   end
 
-  create_table "levels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "levels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.bigint "school_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -71,7 +77,7 @@ ActiveRecord::Schema.define(version: 2021_03_29_041703) do
     t.index ["school_id"], name: "index_levels_on_school_id"
   end
 
-  create_table "marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
     t.decimal "rate", precision: 5, scale: 2, null: false
     t.bigint "school_id", null: false
@@ -80,7 +86,7 @@ ActiveRecord::Schema.define(version: 2021_03_29_041703) do
     t.index ["school_id"], name: "index_marks_on_school_id"
   end
 
-  create_table "question_tests", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "question_tests", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "question_id", null: false
     t.bigint "test_id", null: false
     t.float "score"
@@ -90,7 +96,7 @@ ActiveRecord::Schema.define(version: 2021_03_29_041703) do
     t.index ["test_id"], name: "index_question_tests_on_test_id"
   end
 
-  create_table "questions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "questions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "content", null: false
     t.string "content_image"
     t.integer "difficulty"
@@ -103,14 +109,14 @@ ActiveRecord::Schema.define(version: 2021_03_29_041703) do
     t.index ["teacher_id"], name: "index_questions_on_teacher_id"
   end
 
-  create_table "schools", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "schools", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
     t.string "location", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "section_classes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "section_classes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "study_class_id"
@@ -119,7 +125,7 @@ ActiveRecord::Schema.define(version: 2021_03_29_041703) do
     t.index ["subject_id"], name: "index_section_classes_on_subject_id"
   end
 
-  create_table "semesters", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "semesters", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.datetime "start_date"
     t.datetime "end_date"
@@ -129,7 +135,7 @@ ActiveRecord::Schema.define(version: 2021_03_29_041703) do
     t.index ["school_id"], name: "index_semesters_on_school_id"
   end
 
-  create_table "student_group_tutors", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "student_group_tutors", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "student_id", null: false
     t.bigint "group_tutor_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -138,7 +144,7 @@ ActiveRecord::Schema.define(version: 2021_03_29_041703) do
     t.index ["student_id"], name: "index_student_group_tutors_on_student_id"
   end
 
-  create_table "student_section_classes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "student_section_classes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "student_id", null: false
     t.bigint "section_class_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -147,7 +153,7 @@ ActiveRecord::Schema.define(version: 2021_03_29_041703) do
     t.index ["student_id"], name: "index_student_section_classes_on_student_id"
   end
 
-  create_table "student_study_classes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "student_study_classes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "student_id", null: false
     t.bigint "study_class_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -156,7 +162,7 @@ ActiveRecord::Schema.define(version: 2021_03_29_041703) do
     t.index ["study_class_id"], name: "index_student_study_classes_on_study_class_id"
   end
 
-  create_table "study_classes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "study_classes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -166,7 +172,7 @@ ActiveRecord::Schema.define(version: 2021_03_29_041703) do
     t.index ["semester_id"], name: "index_study_classes_on_semester_id"
   end
 
-  create_table "subjects", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "subjects", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -175,7 +181,7 @@ ActiveRecord::Schema.define(version: 2021_03_29_041703) do
     t.index ["school_id"], name: "index_subjects_on_school_id"
   end
 
-  create_table "teacher_section_classes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "teacher_section_classes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "teacher_id", null: false
     t.bigint "section_class_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -184,7 +190,7 @@ ActiveRecord::Schema.define(version: 2021_03_29_041703) do
     t.index ["teacher_id"], name: "index_teacher_section_classes_on_teacher_id"
   end
 
-  create_table "teaching_managements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "teaching_managements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "teacher_id", null: false
     t.bigint "study_class_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -193,7 +199,7 @@ ActiveRecord::Schema.define(version: 2021_03_29_041703) do
     t.index ["teacher_id"], name: "index_teaching_managements_on_teacher_id"
   end
 
-  create_table "tests", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "tests", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "title"
     t.string "description"
     t.datetime "start_time"
@@ -214,7 +220,7 @@ ActiveRecord::Schema.define(version: 2021_03_29_041703) do
     t.index ["teacher_id"], name: "index_tests_on_teacher_id"
   end
 
-  create_table "user_schools", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "user_schools", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "school_id"
     t.datetime "created_at", precision: 6, null: false
@@ -223,7 +229,7 @@ ActiveRecord::Schema.define(version: 2021_03_29_041703) do
     t.index ["user_id"], name: "index_user_schools_on_user_id"
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "username", null: false
     t.string "first_name", null: false
     t.string "last_name", null: false
@@ -251,7 +257,6 @@ ActiveRecord::Schema.define(version: 2021_03_29_041703) do
   end
 
   add_foreign_key "answers", "questions"
-  add_foreign_key "draft_tests", "chapters"
   add_foreign_key "draft_tests", "users", column: "teacher_id"
   add_foreign_key "group_tutors", "subjects"
   add_foreign_key "group_tutors", "users", column: "teacher_id"

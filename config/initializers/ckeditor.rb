@@ -11,7 +11,7 @@ Ckeditor.setup do |config|
   # Allowed image file types for upload.
   # Set to nil or [] (empty array) for all file types
   # By default: %w(jpg jpeg png gif tiff)
-  # config.image_file_types = %w(jpg jpeg png gif tiff)
+  config.image_file_types = %w(jpg jpeg png gif tiff)
 
   # Allowed flash file types for upload.
   # Set to nil or [] (empty array) for all file types
@@ -21,7 +21,7 @@ Ckeditor.setup do |config|
   # Allowed attachment file types for upload.
   # Set to nil or [] (empty array) for all file types
   # By default: %w(doc docx xls odt ods pdf rar zip tar tar.gz swf)
-  # config.attachment_file_types = %w(doc docx xls odt ods pdf rar zip tar tar.gz swf)
+  config.attachment_file_types = %w(doc docx xls odt ods pdf rar zip tar tar.gz swf)
 
   # Setup authorization to be run as a before filter
   # By default: there is no authorization.
@@ -37,7 +37,7 @@ Ckeditor.setup do |config|
 
   # Paginate assets
   # By default: 24
-  # config.default_per_page = 24
+  config.default_per_page = 20
 
   # Customize ckeditor assets path
   # By default: nil
@@ -51,5 +51,5 @@ Ckeditor.setup do |config|
   # JS config url
   # Used when CKEditor CDN enabled
   # By default: "ckeditor/config.js"
-  # config.js_config_url = 'ckeditor/config.js'
+  # config.js_config_url = 'ckeditor/index.js'
 end
