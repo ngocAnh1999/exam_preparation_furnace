@@ -14,6 +14,7 @@ gem "faker", :git => "https://github.com/faker-ruby/faker.git", :branch => "mast
 gem "figaro"
 gem "haml-rails"
 gem "jbuilder", "~> 2.7"
+gem "kaminari"
 gem "mini_magick"
 gem "mysql2"
 gem "puma", "~> 4.1"

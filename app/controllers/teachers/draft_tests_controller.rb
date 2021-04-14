@@ -1,7 +1,10 @@
 class Teachers::DraftTestsController < TeachersController
   before_action :load_references, only: :new
 
-  def index; end
+  def index
+    @draft_tests = current_user.draft_tests.page params[:page]
+    render partial: "teachers/draft_tests/table", draft_tests: @draft_tests
+  end
 
   def new
     @draft_test = DraftTest.new

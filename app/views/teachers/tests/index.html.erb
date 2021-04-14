@@ -3,14 +3,14 @@
     <%= form_tag "#", method: "get", class: "form-group bmd-form-group" do %>
       <%= text_field_tag :test_attribute, nil, class: "form-control input-lg", placeholder: "Search" %>
       <%= button_tag type: "submit", class: "btn btn-white btn-raised btn-fab btn-round" do %>
-        <i class="material-icons">search</i>
+        <i class="material-icons text-primary">search</i>
       <% end %>
     <% end %>
     <div class="form-group bmd-form-group ml-auto">
-      <%= link_to new_teachers_draft_test_path, class: "btn btn-success btn-fab btn-round",
+      <%= link_to new_teachers_draft_test_path, class: "btn btn-white btn-fab btn-round",
         "data-toggle": "tooltip", "data-placement": "right", title: "Tao de moi",
         "data-container": "body", "data-original-title": "Tao de moi" do %>
-        <i class="material-icons">post_add</i>
+        <i class="material-icons text-success">post_add</i>
       <% end %>
     </div>
   </div>
@@ -21,30 +21,43 @@
         color-classes: "nav-pills-primary", "nav-pills-info", "nav-pills-success", "nav-pills-warning","nav-pills-danger"
     -->
     <li class="nav-item">
-      <a class="nav-link active" href="#dashboard-1" role="tab" data-toggle="tab">
+      <a class="nav-link active" href="#created_test" role="tab" data-toggle="tab">
         De da tao
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#schedule-1" role="tab" data-toggle="tab">
-        De nhap
-      </a>
+      <%= link_to "De nhap", "#draft_test", class: "nav-link", role: "tab", "data-toggle": "tab", id: "index_draft_test" %>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#tasks-1" role="tab" data-toggle="tab">
+      <a class="nav-link" href="#shared_test" role="tab" data-toggle="tab">
         De duoc chia se
       </a>
     </li>
   </ul>
   <div class="tab-content tab-space">
-    <div class="tab-pane active" id="dashboard-1">
-      <%= render partial: "teachers/draft_tests/created_test" %>
+    <div class="tab-pane active" id="created_test">
+      <%= render partial: "teachers/tests/table" %>
     </div>
-    <div class="tab-pane" id="schedule-1">
-      De nhap
-    </div>
-    <div class="tab-pane" id="tasks-1">
-      De duoc chia se
+    <div class="tab-pane" id="draft_test"></div>
+    <div class="tab-pane" id="shared_test">
+      Dang cap nhat....
     </div>
   </div>
 </div>
+
+<script>
+  $('#index_draft_test').on('click', () => {
+    if ($('#index_draft_test').hasClass('active') == false) {
+      $.ajax({
+        url: "<%= teachers_draft_tests_path %>",
+        method: 'GET',
+        beforeSend:()=>{
+          console.log("view index draft_test")
+        },
+        success:(response)=>{
+          $('#draft_test').html(response);
+        }
+      })
+    }
+  })
+</script>
