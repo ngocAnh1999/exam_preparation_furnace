@@ -1,48 +1,51 @@
-<nav class="navbar navbar-expand-lg bg-primary sticky-top">
-  <div class="container">
-    <div class="navbar-translate">
-      <%= link_to "Exam Preparation Furnace", "#", class: "navbar-brand" %>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="navbar-toggler-icon"></span>
-        <span class="navbar-toggler-icon"></span>
-        <span class="navbar-toggler-icon"></span>
-      </button>
-    </div>
-    <div class="collapse navbar-collapse">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <%= link_to "#", class: "nav-link" do %>
-            <i class="material-icons">notifications_active</i>
-          <% end %>
-        </li>
-        <li class="nav-item" id="locale-en">
-          <%= link_to "EN", { locale:"en" }, class: "nav-link" %>
-        </li>
-        <li class="nav-item" id="locale-vi">
-          <%= link_to "VI", { locale:"vi" }, class: "nav-link" %>
-        </li>
-        <% if user_signed_in? %>
-          <li class="dropdown nav-item">
-            <%= link_to "javascript:;", class: "dropdown-toggle nav-link", "data-toggle": "dropdown", "aria-expanded": "false" do %>
-              <i class="material-icons">account_circle</i>
-              <%= current_user.username %>
-              <b class="caret"></b>
-              <div class="ripple-container"></div>
-            <% end %>
-            <div class="dropdown-menu dropdown-menu-right">
-              <%= link_to "Profile", "#", class: "dropdown-item" %>
-              <div class="dropdown-divider"></div>
-              <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
-            </div>
-          </li>
-        <% else %>
-          <li class="nav-item">
-            <%= link_to "Login", new_user_session_path, class: "nav-link" %>
-          </li>
+<nav class="navbar navbar-expand-lg bg-dark sticky-top d-flex">
+  <div class="navbar-translate gutter-xs">
+    <%= link_to "#", class: "navbar-brand gutter-xs" do %>
+      <i class="large material-icons">school</i>
+      Exam Preparation Furnace
+    <% end %>
+    <button class="navbar-toggler" type="button" data-toggle="collapse"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="navbar-toggler-icon"></span>
+      <span class="navbar-toggler-icon"></span>
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+  <div class="justify-content-end collapse navbar-collapse gutter-xs">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <%= link_to "#", class: "nav-link" do %>
+          <i class="material-icons">notifications_active</i>
         <% end %>
-      </ul>
-    </div>
+      </li>
+      <li class="nav-item" id="locale-en">
+        <%= link_to "EN", { locale:"en" }, class: "nav-link" %>
+      </li>
+      <li class="nav-item" id="locale-vi">
+        <%= link_to "VI", { locale:"vi" }, class: "nav-link" %>
+      </li>
+      <% if user_signed_in? %>
+        <li class="dropdown nav-item">
+          <%= link_to "#", class: "dropdown-toggle nav-link",
+            "data-toggle": "dropdown", "aria-expanded": "false" do %>
+            <i class="material-icons">account_circle</i>
+            <%= current_user.username %>
+            <b class="caret"></b>
+            <div class="ripple-container"></div>
+          <% end %>
+          <div class="dropdown-menu dropdown-menu-right">
+            <%= link_to "Profile", "#", class: "dropdown-item" %>
+            <div class="dropdown-divider"></div>
+            <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
+          </div>
+        </li>
+      <% else %>
+        <li class="nav-item">
+          <%= link_to "Login", new_user_session_path, class: "nav-link" %>
+        </li>
+      <% end %>
+    </ul>
   </div>
 </nav>
 

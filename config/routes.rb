@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
+  mount Ckeditor::Engine => '/ckeditor'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   scope "(:locale)", locale: /en|vi/ do
     get "/", to: "home#index"
+    concern :paginatable do
+      get '(page/:page)', action: :index, on: :collection, as: ''
+    end
 
     root to: "home#index"
     devise_for :users, skip: :omniauth_callbacks,
@@ -21,9 +25,13 @@ Rails.application.routes.draw do
 
     resources :users
     namespace :teachers do
-      root to: "draft_tests#index"
+      root to: "tests#index"
 
-      resources :draft_tests
+      resources :tests, concerns: :paginatable
+
+      resources :draft_tests, concerns: :paginatable do
+        get :search_chapters, on: :collection
+      end
     end
   end
 end

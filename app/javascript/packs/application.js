@@ -7,15 +7,16 @@ require("@rails/ujs").start()
 require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
-require("jquery")
+require("@nathanvda/cocoon")
+var jQuery = require('jquery')
+global.$ = global.jQuery = jQuery;
+window.$ = window.jQuery = jQuery;
 
-require("material-kit/assets/js/core/bootstrap-material-design.min.js")
+require("material-kit/assets/js/core/jquery.min.js")
 require('material-kit/assets/js/core/popper.min.js')
-require("material-kit/assets/js/plugins/nouislider.min.js")
+require("material-kit/assets/js/core/bootstrap-material-design.min.js")
 require("material-kit/assets/js/plugins/moment.min.js")
-require("material-kit/assets/js/plugins/jquery.sharrre.js")
-require("material-kit/assets/js/plugins/bootstrap-datetimepicker.js")
-require("material-kit/assets/js/material-kit.js")
+require("material-kit/assets/js/plugins/nouislider.min.js")
 require("@fortawesome/fontawesome-free")
 
 global.toastr = require("toastr")
@@ -39,3 +40,5 @@ toastr.options = {
   "showMethod": "fadeIn",
   "hideMethod": "fadeOut"
 }
+
+$.fn.datetimepicker = require('material-kit/assets/js/plugins/bootstrap-datetimepicker.js');

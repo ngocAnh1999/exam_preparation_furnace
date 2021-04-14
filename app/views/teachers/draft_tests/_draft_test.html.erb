@@ -1,0 +1,21 @@
+<tr>
+  <td class="text-center py-auto">#</td>
+  <td><%= draft_test.title %></td>
+  <td><%= subject %></td>
+  <td><%= draft_test.description %></td>
+  <td><%= draft_test.start_time %></td>
+  <td><%= draft_test.due_time %></td>
+  <td><%= draft_test.doing_time %></td>
+  <td><%= l draft_test.created_at, format: :default %></td>
+
+  <td class="td-actions text-right">
+    <%= link_to edit_teachers_draft_test_path(id: draft_test.id),
+      class: "btn btn-fab btn-round btn-sm btn-white" do %>
+      <i class="material-icons text-info">edit</i>
+    <% end %>
+    <%= link_to teachers_draft_test_path(id: draft_test.id), method: :delete,
+      class: "btn btn-fab btn-round btn-sm btn-white" do %>
+      <i class="material-icons text-danger">delete_forever</i>
+    <% end %>
+  </td>
+</tr>
