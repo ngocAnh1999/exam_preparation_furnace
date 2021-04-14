@@ -5,4 +5,5 @@ class Student < User
   has_many :section_classes, through: :student_section_classes
   has_many :student_study_classes, dependent: :destroy
   has_many :study_classes, through: :student_study_classes
+  has_many :tasks, dependent: :destroy
 end

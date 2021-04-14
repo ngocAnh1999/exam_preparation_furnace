@@ -9,4 +9,7 @@ class Teacher < User
   has_many :tests, dependent: :destroy
   has_many :questions, dependent: :destroy
   has_many :draft_tests, dependent: :destroy
+  has_many :group_tutors, dependent: :destroy
+  has_many :teacher_shared_tests, dependent: :destroy
+  has_many :tests, through: :teacher_shared_tests, as: :shared_tests
 end
