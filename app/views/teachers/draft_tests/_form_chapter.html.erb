@@ -1,0 +1,47 @@
+<div class="form-group row">
+  <div class="col">
+    <label for="level">Khối</label>
+    <%= f.select :level, options_for_select(@list_levels),{}, class: "form-control" %>
+  </div>
+  <div class="col">
+    <label for="subject">Môn</label>
+    <%= f.select :subject, options_for_select(@list_subjects),{}, class: "form-control" %>
+  </div>
+  <div class="col" id="list-chapter">
+    <label for="chapter">Chương</label>
+    <%= f.select 'draft_test[chapter]', options_for_select([]),{},class: "form-control", id: "chapter" %>
+  </div>
+</div>
+<div class="spinner-border text-secondary" role="status" id="loading-chapter">
+  <span class="sr-only">Loading...</span>
+</div>
+<script>
+  $(function() {
+    getListChapters();
+  });
+  $('#level, #subject').on('change', () => getListChapters());
+
+  function getListChapters() {
+    $.ajax({
+      type: 'get',
+      url: "<%= search_chapters_teachers_draft_tests_path %>",
+      data: {
+        subject: $('#subject').val(),
+        level: $('#level').val()
+      },
+      beforeSend: function( ) {
+        $('#loading-chapter').removeClass('d-none');
+      }
+    })
+    .done(function(data) {
+      $('#loading-chapter').addClass('d-none');
+
+      $('#chapter').empty();
+      $.each(data, function(index, value) {
+        let o = new Option(value[1], value[0]);
+        $(o).html(value[1]);
+        $("#chapter").append(o);
+      })
+    });
+  }
+</script>

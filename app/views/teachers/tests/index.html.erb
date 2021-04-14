@@ -1,0 +1,66 @@
+<div class="navbar-collapse">
+  <div class="form-inline">
+    <%= form_tag "#", method: "get", class: "form-group bmd-form-group" do %>
+      <%= text_field_tag :test_attribute, nil, class: "form-control input-lg", placeholder: "Search" %>
+      <%= button_tag type: "submit", class: "btn btn-white btn-raised btn-fab btn-round" do %>
+        <i class="material-icons text-primary">search</i>
+      <% end %>
+    <% end %>
+    <div class="form-group bmd-form-group ml-auto">
+      <%= link_to teachers_draft_tests_path, method: :post, class: "btn btn-white btn-fab btn-round btn-lg shadow",
+        "data-toggle": "tooltip", "data-placement": "right", title: "Tao de moi",
+        "data-container": "body", "data-original-title": "Tao de moi" do %>
+        <i class="material-icons text-success">post_add</i>
+      <% end %>
+    </div>
+  </div>
+</div>
+<div class="gutter-ys">
+  <ul class="nav nav-pills nav-pills-primary px-0 pb-2 border-bottom" role="tablist">
+    <!--
+        color-classes: "nav-pills-primary", "nav-pills-info", "nav-pills-success", "nav-pills-warning","nav-pills-danger"
+    -->
+    <li class="nav-item">
+      <a class="nav-link active" href="#created_test" role="tab" data-toggle="tab">
+        Đề đã tạo
+      </a>
+    </li>
+    <li class="nav-item">
+      <%= link_to "Đề nháp", "#draft_test", class: "nav-link", role: "tab",
+        "data-toggle": "tab", id: "index_draft_test" %>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#shared_test" role="tab" data-toggle="tab">
+        Đề được chia sẻ
+      </a>
+    </li>
+  </ul>
+  <div class="tab-content tab-space">
+    <div class="tab-pane active" id="created_test">
+      <%= render partial: "teachers/tests/table" %>
+    </div>
+    <div class="tab-pane" id="draft_test"></div>
+    <div class="tab-pane" id="shared_test">
+      Dang cap nhat....
+    </div>
+  </div>
+</div>
+<div id="loading-svg"><div>
+
+<script>
+  $('#index_draft_test').on('click', () => {
+    if ($('#index_draft_test').hasClass('active') == false) {
+      $.ajax({
+        url: "<%= teachers_draft_tests_path %>",
+        method: 'GET',
+        beforeSend:()=>{
+          $('#loading-svg').html(`<%= show_svg('loading.svg') %>`);
+        },
+        success:(response)=>{
+          $('#draft_test').html(response);
+          $('#loading-svg').html("");
+        }
+      })
+    }
+  })
+</script>
