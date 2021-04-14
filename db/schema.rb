@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_30_043422) do
+ActiveRecord::Schema.define(version: 2021_04_14_090216) do
 
   create_table "answers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "content"
@@ -21,6 +21,17 @@ ActiveRecord::Schema.define(version: 2021_03_30_043422) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["question_id"], name: "index_answers_on_question_id"
+  end
+
+  create_table "assigned_groups", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.datetime "published_at"
+    t.string "groupable_type", null: false
+    t.bigint "groupable_id", null: false
+    t.bigint "test_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["groupable_type", "groupable_id"], name: "index_assigned_groups_on_groupable_type_and_groupable_id"
+    t.index ["test_id"], name: "index_assigned_groups_on_test_id"
   end
 
   create_table "chapters", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -181,6 +192,21 @@ ActiveRecord::Schema.define(version: 2021_03_30_043422) do
     t.index ["school_id"], name: "index_subjects_on_school_id"
   end
 
+  create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "student_id", null: false
+    t.bigint "assigned_group_id", null: false
+    t.datetime "started_at"
+    t.datetime "ended_at"
+    t.float "score"
+    t.json "answers"
+    t.integer "task_status"
+    t.string "teacher_comment"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["assigned_group_id"], name: "index_tasks_on_assigned_group_id"
+    t.index ["student_id"], name: "index_tasks_on_student_id"
+  end
+
   create_table "teacher_section_classes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "teacher_id", null: false
     t.bigint "section_class_id", null: false
@@ -188,6 +214,15 @@ ActiveRecord::Schema.define(version: 2021_03_30_043422) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["section_class_id"], name: "index_teacher_section_classes_on_section_class_id"
     t.index ["teacher_id"], name: "index_teacher_section_classes_on_teacher_id"
+  end
+
+  create_table "teacher_shared_tests", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "teacher_id", null: false
+    t.bigint "test_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["teacher_id"], name: "index_teacher_shared_tests_on_teacher_id"
+    t.index ["test_id"], name: "index_teacher_shared_tests_on_test_id"
   end
 
   create_table "teaching_managements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -216,6 +251,7 @@ ActiveRecord::Schema.define(version: 2021_03_30_043422) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "mark_id"
     t.index ["chapter_id"], name: "index_tests_on_chapter_id"
+    t.index ["link_share"], name: "index_tests_on_link_share"
     t.index ["mark_id"], name: "index_tests_on_mark_id"
     t.index ["teacher_id"], name: "index_tests_on_teacher_id"
   end
