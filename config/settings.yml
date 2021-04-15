@@ -2,3 +2,5 @@ user:
   basic_type:
     - Teacher
     - Student
+test:
+  datime_format: "%m/%d/%Y %l:%M %p"
