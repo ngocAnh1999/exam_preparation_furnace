@@ -31,6 +31,8 @@ Rails.application.routes.draw do
 
       resources :draft_tests, concerns: :paginatable do
         get :search_chapters, on: :collection
+        get :teacher_same_subjects, on: :collection
+        get :new_test, on: :member
       end
     end
   end

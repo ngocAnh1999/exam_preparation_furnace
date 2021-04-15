@@ -47,3 +47,21 @@ label {
 svg {
   width: 8rem;
 }
+
+.manage-shared-teacher {
+  border: 1px solid $blue-grey;
+  border-radius: 5px;
+  padding: 1rem;
+}
+
+.list-shared-teacher {
+  border-left: 1px solid $blue-grey;
+}
+
+.teacher-name {
+  border: 1px solid $blue-grey;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  width: 20rem;
+  text-align: center;
+}

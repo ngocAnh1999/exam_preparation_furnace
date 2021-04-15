@@ -5,7 +5,7 @@ class Test < ApplicationRecord
   has_many :assigned_groups, dependent: :destroy
   has_many :teacher_shared_tests, dependent: :destroy
 
-  enum difficulty: [:easy, :middle, :hard]
+  enum difficulty: [:easy, :medium, :hard]
   enum shared_status: [:individual, :limited, :unlimited]
 
   validates :title, :start_time, :due_time, presence: true
@@ -16,6 +16,14 @@ class Test < ApplicationRecord
   validates :shuffle_count, numericality: { less_than_or_equal_to: 50 }
 
   before_create :generate_link_share
+
+  def assign_draft_attributes draft_test
+    list_attributes = %i[title description start_time due_time doing_time shuffle_count unlimited_flag teacher_id].freeze
+
+    list_attributes.each do |attribute|
+      self.send "#{attribute}=", draft_test.send(attribute)
+    end
+  end
 
   private
 

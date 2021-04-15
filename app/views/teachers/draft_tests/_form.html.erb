@@ -95,9 +95,7 @@
             Cập nhật lúc: <%= l @draft_test.updated_at, format: :default %>
           </small>
           <%= f.submit 'Lưu nháp', class: "btn btn-secondary ml-auto border border-sidebar" %>
-          <button type="button" class="btn btn-success"
-            data-toggle="modal" data-target="#modal_delete_question"
-            data-dismiss="modal" data-backdrop="false">Tạo bài test</button>
+          <%= link_to "Tạo bài test", new_test_teachers_draft_test_path(id: @draft_test.id), class: "btn btn-success" %>
         <div>
       </div>
     </div>

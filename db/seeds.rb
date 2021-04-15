@@ -81,7 +81,7 @@ subjects = ["Toan", "Ly", "Hoa", "Sinh", "Van", "Su", "Dia", "Giao duc cong dan"
 subjects.each do |value|
   subject = school.subjects.find_or_create_by(name: value)
   (1...5).each do |n|
-    subject.chapters.find_or_create_by(level_id: Level.first.id, name: "Chuong #{n}")
+    subject.chapters.find_or_create_by(level_id: Level.first.id, name: "chương #{n}")
   end
   StudyClass.all.each do |study_class|
     section_class = study_class.section_classes.find_or_create_by(subject_id: subject.id)

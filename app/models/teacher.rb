@@ -12,4 +12,8 @@ class Teacher < User
   has_many :group_tutors, dependent: :destroy
   has_many :teacher_shared_tests, dependent: :destroy
   has_many :tests, through: :teacher_shared_tests, as: :shared_tests
+
+  def full_name
+    [first_name, last_name].join(" ")
+  end
 end

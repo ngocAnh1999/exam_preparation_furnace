@@ -16,4 +16,12 @@ module TeachersHelper
       raw file.read
     end
   end
+
+  def options_difficulities
+    options = []
+    Settings.test.difficulty.to_h.each do |key, val|
+      options << [t("test.difficulty.#{key}"), val]
+    end
+    options
+  end
 end

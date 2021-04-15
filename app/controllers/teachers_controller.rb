@@ -15,4 +15,8 @@ class TeachersController < ApplicationController
   def current_teacher
     current_user if current_user&.Teacher?
   end
+
+  def current_school
+    current_user.schools.first
+  end
 end
