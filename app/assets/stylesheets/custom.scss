@@ -41,7 +41,7 @@ label {
 .sticky-taskbar, ul.sticky-taskbar {
   position: -webkit-sticky;
   position: sticky;
-  top: 6rem;
+  top: 8rem;
 }
 
 svg {
@@ -64,4 +64,7 @@ svg {
   padding: 0.5rem;
   width: 20rem;
   text-align: center;
+}
+.bootstrap-datetimepicker-widget{
+  z-index:99999 !important
 }

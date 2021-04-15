@@ -1,4 +1,5 @@
 <script>
+  var intavalAutoSubmit = null;
   $(function() {
     $.ajaxSetup({
       headers:
@@ -11,8 +12,10 @@
       addHeader('essay');
     <% end %>
     handleQuestionTitle();
-    setInterval(() => autoSubmit(), 3500);
+    intavalAutoSubmit = setInterval(() => autoSubmit(), 3500);
   })
+  $('.new-test').on('click', () => clearInterval(intavalAutoSubmit));
+
   $('.datetimepicker').datetimepicker({
     icons: {
       time: "fa fa-clock-o",

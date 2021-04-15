@@ -11,8 +11,8 @@ class Teachers::TestsController < TeachersController
       @test.assign_draft_attributes @draft_test
       binding.pry
       # @test.save!
-      @draft_test.questions.each {|item| item.merge!(teacher_id: current_user.id) }
-      
+      # @draft_test.questions.each {|item| item.merge!(teacher_id: current_user.id) }
+      # InsertRecordsService.new(@draft_test, current_user).perform
     end
   end
 

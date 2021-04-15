@@ -24,7 +24,7 @@
               </span>
             </div>
             <%= f.text_field :start_time, id: "start_time",
-              value: f.object.start_time.strftime(Settings.test.datime_format),
+              value: @draft_test.start_time&.strftime(Settings.test.datime_format),
               class: "form-control datetimepicker" %>
           </div>
           <label class="mt-3">Ngày kết thúc</label>
@@ -35,7 +35,7 @@
               </span>
             </div>
             <%= f.text_field :due_time, id: "due_time",
-              value: f.object.due_time.strftime(Settings.test.datime_format),
+              value: @draft_test.due_time&.strftime(Settings.test.datime_format),
               class: "form-control datetimepicker" %>
           </div>
           <label class="mt-3">Thời gian làm bài (phút)</label>
@@ -95,7 +95,7 @@
             Cập nhật lúc: <%= l @draft_test.updated_at, format: :default %>
           </small>
           <%= f.submit 'Lưu nháp', class: "btn btn-secondary ml-auto border border-sidebar" %>
-          <%= link_to "Tạo bài test", new_test_teachers_draft_test_path(id: @draft_test.id), class: "btn btn-success" %>
+          <%= link_to "Tạo bài test", new_test_teachers_draft_test_path(id: @draft_test.id), class: "btn btn-success new-test" %>
         <div>
       </div>
     </div>
