@@ -27,7 +27,7 @@ class Teachers::DraftTestsController < TeachersController
 
   def update
     respond_to do |format|
-      if @draft_test.update draft_test_params
+      if @draft_test.update draft_test_params_converted
         format.json { render json: { updated_at: l(@draft_test.updated_at, format: :default) } }
       else
         format.html { render :edit, notice: "error message" }
@@ -70,5 +70,16 @@ class Teachers::DraftTestsController < TeachersController
         answers_attributes: [:content, :is_correct, :position]
       ]
     )
+  end
+
+  def draft_test_params_converted
+    convert_params = draft_test_params
+    convert_params[:start_time] = datetime_convert convert_params[:start_time]
+    convert_params[:due_time] = datetime_convert convert_params[:due_time]
+    convert_params
+  end
+
+  def datetime_convert str
+    Time.zone.strptime(str, Settings.test.datime_format)
   end
 end
