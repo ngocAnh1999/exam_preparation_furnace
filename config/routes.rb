@@ -27,7 +27,9 @@ Rails.application.routes.draw do
     namespace :teachers do
       root to: "tests#index"
 
-      resources :tests, concerns: :paginatable
+      resources :tests, concerns: :paginatable do
+        get :send_test, on: :member
+      end
 
       resources :draft_tests, concerns: :paginatable do
         get :search_chapters, on: :collection

@@ -1,5 +1,6 @@
 class Teachers::TestsController < TeachersController
   before_action :load_draft_test, only: :create
+  before_action :load_test, only: :send_test
 
   def index
     @tests = current_user.tests.page params[:page]
@@ -9,12 +10,17 @@ class Teachers::TestsController < TeachersController
     ActiveRecord::Base.transaction do
       @test = current_user.tests.build test_params
       @test.assign_draft_attributes @draft_test
-      binding.pry
-      # @test.save!
-      # @draft_test.questions.each {|item| item.merge!(teacher_id: current_user.id) }
-      # InsertRecordsService.new(@draft_test, current_user).perform
+      @test.save!
+
+      InsertRecordsService.new(@draft_test, current_user, @test, params[:teacher_ids]).perform
+      @draft_test.destroy
+
+      flash[:notice] = "create test success"
+      redirect_to send_test_teachers_test_path(id: @test.id)
     end
   end
+
+  def send_test; end
 
   private
 
@@ -29,5 +35,9 @@ class Teachers::TestsController < TeachersController
 
   def load_draft_test
     @draft_test = current_user.draft_tests.find params[:draft_test_id]
+  end
+
+  def load_test
+    @test = current_user.tests.find params[:id]
   end
 end

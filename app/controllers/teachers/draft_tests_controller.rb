@@ -29,9 +29,9 @@ class Teachers::DraftTestsController < TeachersController
   def update
     respond_to do |format|
       if @draft_test.update draft_test_params_converted
-        format.json { render json: { updated_at: l(@draft_test.updated_at, format: :default) } }
+        format.json { render json: { updated_at: l(@draft_test.updated_at, format: :default), success: true } }
       else
-        format.html { render :edit, notice: "error message" }
+        format.json { render json: { success: false } }
       end
     end
   end
@@ -80,7 +80,7 @@ class Teachers::DraftTestsController < TeachersController
       questions: [
         :content,
         :suggestion,
-        :type,
+        :question_type,
         answers_attributes: [:content, :is_correct, :position]
       ]
     )

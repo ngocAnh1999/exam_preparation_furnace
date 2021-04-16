@@ -5,7 +5,7 @@ module TeachersHelper
 
   def have_type_questions? object, type
     object.questions.each do |question|
-      return true if question['type'] == type
+      return true if question['question_type'] == type
     end
 
     return false

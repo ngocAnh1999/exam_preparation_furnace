@@ -92,3 +92,4 @@ end
 Teacher.first.teacher_section_classes.find_or_create_by(section_class_id: SectionClass.first.id)
 Teacher.first.teacher_section_classes.find_or_create_by(section_class_id: SectionClass.second.id)
 Teacher.second.teacher_section_classes.find_or_create_by(section_class_id: SectionClass.second.id)
+Teacher.third.teacher_section_classes.find_or_create_by(section_class_id: SectionClass.second.id)

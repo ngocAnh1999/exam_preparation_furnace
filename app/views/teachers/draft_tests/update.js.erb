@@ -1,0 +1,6 @@
+$('.edit_draft_test').bind('ajax:success', (event,data) => {
+  debugger
+  if(data.success == true) {
+    $('#time-updated-draft-test').html(`<%= render "updated_at", draft_test: @draft_test %>`)
+  }
+})

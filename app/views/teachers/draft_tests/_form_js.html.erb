@@ -1,20 +1,30 @@
 <script>
-  var intavalAutoSubmit = null;
+  var intervalAutoSubmit = setAutoSubmit();
   $(function() {
     $.ajaxSetup({
       headers:
         {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
     });
-    <% if have_type_questions?(f.object, 'multiple_choice') %>
+    <% if have_type_questions?(@draft_test, 'multiple_choice') %>
       addHeader('multichoice');
     <% end %>
-    <% if have_type_questions?(f.object, 'essay') %>
+    <% if have_type_questions?(@draft_test, 'essay') %>
       addHeader('essay');
     <% end %>
     handleQuestionTitle();
-    intavalAutoSubmit = setInterval(() => autoSubmit(), 3500);
+    intervalAutoSubmit;
   })
-  $('.new-test').on('click', () => clearInterval(intavalAutoSubmit));
+
+  function setAutoSubmit(){
+    i = setInterval(() => $('#submit-draft').click(), 4000);
+    return i;
+  }
+
+  function stopAutoSubmit() {
+    clearInterval(intervalAutoSubmit);
+  }
+
+  $('.new-test').on('click', () => stopAutoSubmit());
 
   $('.datetimepicker').datetimepicker({
     icons: {
@@ -31,25 +41,24 @@
   });
 
   function autoSubmit() {
-    $('form').submit(function() {
-      let valuesToSubmit = $(this).serialize();
-      $.ajax({
-        type: "PATCH",
-        url: $(this).attr('action'),
-        data: valuesToSubmit,
-        dataType: "JSON",
-        success: function(response) {
-          $('#time-updated-draft-test').html(
-            `Cập nhật lúc: ${response['updated_at']}`
-          )
-        },
-        error: function(err) {
-          $('#time-updated-draft-test').html(`<p class="text-danger">submit error<p>`)
-        }
-      })
-      return false;
-    });
-    $('form').submit();
+    // $('form').submit(function() {
+    //   let valuesToSubmit = $(this).serialize();
+    //   $.ajax({
+    //     type: "PATCH",
+    //     url: $(this).attr('action'),
+    //     data: valuesToSubmit,
+    //     dataType: "JSON",
+    //     success: function(response) {
+    //       $('#time-updated-draft-test').html(
+    //         `Cập nhật lúc: ${response['updated_at']}`
+    //       )
+    //     },
+    //     error: function(err) {
+    //       $('#time-updated-draft-test').html(`<p class="text-danger">submit error<p>`)
+    //     }
+    //   })
+    //   return false;
+    // });
   }
 
   $('.add-multi-choice').on('click', function() {
@@ -119,10 +128,10 @@
           onclick="DeleteQuestion(this);">delete_forever</i></h4>`
       )
       $('#list-question-card').append(
-      `<%= link_to "#", class: "btn btn-fab btn-round btn-white mr-1" do %>
-        ${index+1}
-      <% end %>`
-    )
+        `<%= link_to "#", class: "btn btn-fab btn-round btn-white mr-1" do %>
+          ${index+1}
+        <% end %>`
+      )
     })
   }
 

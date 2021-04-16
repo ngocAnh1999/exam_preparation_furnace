@@ -107,9 +107,9 @@
       $('.shared-teachers').append(
         `
           <div class="d-flex mb-2">
-            <input type="hidden" name="teacher_ids" id="teacher_ids" value="${$(me).val()}" />
+            <input type="hidden" name="teacher_ids[]" id="teacher_ids" value="${$(me).val()}" />
             <span class="teacher-name">
-              ${me.innerText}
+              ${$('#teacher_id option:selected').text()}
             </span>
               <i class="material-icons text-danger cursor-pointer p-2"
                 onclick="removeFromListTeachers(this)">person_remove</i>

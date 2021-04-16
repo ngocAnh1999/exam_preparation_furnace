@@ -1,5 +1,7 @@
 class Test < ApplicationRecord
   belongs_to :teacher
+  belongs_to :chapter
+  belongs_to :mark
   has_many :question_tests, dependent: :destroy
   has_many :questions, through: :question_tests
   has_many :assigned_groups, dependent: :destroy
@@ -17,6 +19,9 @@ class Test < ApplicationRecord
 
   before_create :generate_link_share
 
+  delegate :name, to: :chapter, prefix: true
+  delegate :name, to: :mark, prefix: true
+
   def assign_draft_attributes draft_test
     list_attributes = %i[title description start_time due_time doing_time shuffle_count unlimited_flag teacher_id].freeze
 
@@ -28,6 +33,6 @@ class Test < ApplicationRecord
   private
 
   def generate_link_share
-    self.link_share = id + SecureRandom.base58
+    self.link_share = "#{id}_#{SecureRandom.base58}"
   end
 end

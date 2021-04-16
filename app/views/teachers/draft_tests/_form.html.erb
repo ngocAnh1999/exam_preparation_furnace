@@ -83,18 +83,16 @@
         </div>
         <div class="border-bottom border-sidebar my-4"></div>
         <h3 class="title-multichoice d-none">Phần 1: Trắc nghiệm</h3>
-        <%= render partial: 'form_multichoice_question', collection: f.object.questions, as: :question %>
+        <%= render partial: 'form_multichoice_question', collection: @draft_test.questions, as: :question %>
         <div id="multi-choice-question-partial"></div>
 
         <h3 class="title-essay d-none">Phần 2: Tự luận</h3>
-        <%= render partial: 'form_essay_question', collection: f.object.questions, as: :question %>
+        <%= render partial: 'form_essay_question', collection: @draft_test.questions, as: :question %>
         <div id="essay-question-partial"></div>
 
         <div class="d-flex align-content-center">
-          <small class="padding-ys time-update" id="time-updated-draft-test">
-            Cập nhật lúc: <%= l @draft_test.updated_at, format: :default %>
-          </small>
-          <%= f.submit 'Lưu nháp', class: "btn btn-secondary ml-auto border border-sidebar" %>
+          <%= render "updated_at", draft_test: @draft_test %>
+          <%= f.submit 'Lưu nháp', class: "btn btn-secondary ml-auto border border-sidebar", id: "submit-draft" %>
           <%= link_to "Tạo bài test", new_test_teachers_draft_test_path(id: @draft_test.id), class: "btn btn-success new-test" %>
         <div>
       </div>
