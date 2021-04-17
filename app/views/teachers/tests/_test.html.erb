@@ -11,9 +11,11 @@
   <td><%= _test.created_at.strftime Settings.test.datime_format %></td>
 
   <td class="td-actions text-right">
-    <button type="button" rel="tooltip" class="btn btn-fab btn-round btn-sm btn-success">
+    <%= link_to send_test_teachers_test_path(id: _test.id), "data-toggle": "tooltip",
+      "data-placement": "bottom", title: "Chia sẻ đề thi",
+      class: "btn btn-fab btn-round btn-sm btn-success" do %>
       <i class="material-icons">share</i>
-    </button>
+    <% end %>
     <button type="button" rel="tooltip" class="btn btn-fab btn-round btn-sm btn-info">
       <i class="material-icons">insert_link</i>
     </button>

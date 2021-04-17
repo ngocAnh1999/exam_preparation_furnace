@@ -3,4 +3,8 @@ class AssignedGroup < ApplicationRecord
   belongs_to :groupable, polymorphic: true
   belongs_to :test
   has_many :tasks, dependent: :destroy
+
+  class << self
+    include BulkImportable
+  end
 end
