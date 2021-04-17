@@ -5,10 +5,10 @@
       headers:
         {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
     });
-    <% if have_type_questions?(@draft_test, 'multiple_choice') %>
+    <% if have_type_questions?(@draft_test, Settings.question.type.multiple_choice) %>
       addHeader('multichoice');
     <% end %>
-    <% if have_type_questions?(@draft_test, 'essay') %>
+    <% if have_type_questions?(@draft_test, Settings.question.type.essay) %>
       addHeader('essay');
     <% end %>
     handleQuestionTitle();
@@ -16,7 +16,7 @@
   })
 
   function setAutoSubmit(){
-    i = setInterval(() => $('#submit-draft').click(), 4000);
+    i = setInterval(() => $('#submit-draft').click(), 3000);
     return i;
   }
 
@@ -39,27 +39,6 @@
       close: 'fa fa-remove'
     }
   });
-
-  function autoSubmit() {
-    // $('form').submit(function() {
-    //   let valuesToSubmit = $(this).serialize();
-    //   $.ajax({
-    //     type: "PATCH",
-    //     url: $(this).attr('action'),
-    //     data: valuesToSubmit,
-    //     dataType: "JSON",
-    //     success: function(response) {
-    //       $('#time-updated-draft-test').html(
-    //         `Cập nhật lúc: ${response['updated_at']}`
-    //       )
-    //     },
-    //     error: function(err) {
-    //       $('#time-updated-draft-test').html(`<p class="text-danger">submit error<p>`)
-    //     }
-    //   })
-    //   return false;
-    // });
-  }
 
   $('.add-multi-choice').on('click', function() {
     addHeader('multichoice');

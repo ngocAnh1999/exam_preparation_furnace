@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_16_013521) do
+ActiveRecord::Schema.define(version: 2021_04_16_072110) do
 
   create_table "answers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "content"
@@ -117,6 +117,7 @@ ActiveRecord::Schema.define(version: 2021_04_16_013521) do
     t.bigint "teacher_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "position"
     t.index ["teacher_id"], name: "index_questions_on_teacher_id"
   end
 

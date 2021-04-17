@@ -11,6 +11,8 @@ class Test < ApplicationRecord
   enum shared_status: [:individual, :limited, :unlimited]
 
   validates :title, :start_time, :due_time, presence: true
+  validate :time_in_feature
+  validate :time_allowed_to_setup
   validates :title, length: { minimun: 2, maximum: 100 }
   validates :description, length: { minimum: 2, maximum: 500 }, allow_blank: true
   validates :doing_time, presence: true, unless: :unlimited_flag
@@ -28,6 +30,24 @@ class Test < ApplicationRecord
     list_attributes.each do |attribute|
       self.send "#{attribute}=", draft_test.send(attribute)
     end
+  end
+
+  def time_in_feature
+    return unless start_time? || due_time?
+
+    time_now = Time.zone.now
+    errors.add(:start_time, "Không được đặt ngày và giờ trong quá khứ") if start_time <= time_now
+
+    errors.add(:due_time, "Không được đặt ngày và giờ trong quá khứ") if due_time <= time_now
+  end
+
+  def time_allowed_to_setup
+    return unless start_time? || due_time?
+
+    errors.add(:due_time, "Phải lớn hơn thời gian bắt đầu 5 phút") if due_time <= start_time + 5.minutes
+    return unless doing_time?
+
+    errors.add(:due_time, "Phải lớn hơn thời gian bắt đầu và thời gian làm bài") if due_time <= start_time + doing_time.minutes
   end
 
   private

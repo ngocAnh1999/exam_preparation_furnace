@@ -1,4 +1,4 @@
-<% if question['question_type'].eql?(Settings.question.type.multiple_choice.to_s) || question['question_type'].nil? %>
+<% if question['question_type'].eql?(Settings.question.type.essay.to_s) || question['question_type'].nil? %>
   <div class="question-item essay">
     <div class="form-group">
       <p class="title-question"></p>
@@ -9,7 +9,7 @@
     <div class="form-group">
       <label for="suggestion">Gợi ý đáp án</label>
       <%= text_area_tag 'draft_test[questions][][suggestion]', question['suggestion'],
-        class: "form-control ckeditor", rows: 3 %>
+        class: "form-control ckeditor" %>
     </div>
   </div>
 <% end %>

@@ -28,11 +28,9 @@ class Teachers::DraftTestsController < TeachersController
 
   def update
     respond_to do |format|
-      if @draft_test.update draft_test_params_converted
-        format.json { render json: { updated_at: l(@draft_test.updated_at, format: :default), success: true } }
-      else
-        format.json { render json: { success: false } }
-      end
+      @draft_test.update draft_test_params_converted
+      @validates = @draft_test.errors.messages unless @draft_test.valid?(:test)
+      format.js
     end
   end
 

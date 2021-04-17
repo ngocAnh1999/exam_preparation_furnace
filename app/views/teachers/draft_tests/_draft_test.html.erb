@@ -3,9 +3,9 @@
   <td><%= draft_test.title %></td>
   <td><%= subject %></td>
   <td><%= draft_test.description %></td>
-  <td><%= draft_test.start_time %></td>
-  <td><%= draft_test.due_time %></td>
-  <td><%= draft_test.doing_time %></td>
+  <td><%= l draft_test.start_time, format: :default %></td>
+  <td><%= l draft_test.due_time, format: :default %></td>
+  <td><%= draft_test.doing_time %> phút</td>
   <td><%= l draft_test.created_at, format: :default %></td>
 
   <td class="td-actions text-right">
