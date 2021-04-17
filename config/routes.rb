@@ -29,6 +29,7 @@ Rails.application.routes.draw do
 
       resources :tests, concerns: :paginatable do
         get :send_test, on: :member
+        post :assigned_test, on: :member
       end
 
       resources :draft_tests, concerns: :paginatable do

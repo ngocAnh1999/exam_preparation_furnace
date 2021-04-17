@@ -1,6 +1,6 @@
 class Teachers::TestsController < TeachersController
   before_action :load_draft_test, only: :create
-  before_action :load_test, only: :send_test
+  before_action :load_test, only: %i[send_test assigned_test]
 
   def index
     @tests = current_user.tests.page params[:page]
@@ -20,7 +20,19 @@ class Teachers::TestsController < TeachersController
     end
   end
 
-  def send_test; end
+  def send_test
+    @study_classes = current_user.classes.select :id, :name
+    @group_tutors = current_user.group_tutors.select :id, :name
+  end
+
+  def assigned_test
+    ActiveRecord::Base.transaction do
+      SendTestService.new(@test, params).perform
+
+      flash[:notice] = "Gửi đề thành công!"
+      redirect_to teachers_root_path
+    end
+  end
 
   private
 
