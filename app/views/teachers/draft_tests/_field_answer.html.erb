@@ -11,7 +11,6 @@
   </div>
   <%= text_field_tag 'draft_test[questions][][answers_attributes][][content]', answer['content'],
     class: "form-control", id: "answer_content" %>
-  <%= hidden_field_tag 'draft_test[questions][][answers_attributes][][position]', answer['position'] %>
   <i class="material-icons cursor-pointer p-2"
     onclick="DeleteAnswer(this);">backspace</i>
 </div>

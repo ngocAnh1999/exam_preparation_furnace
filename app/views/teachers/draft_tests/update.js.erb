@@ -1,0 +1,11 @@
+$('form').bind('ajax:success', function() {
+  $('#time-updated-draft-test').html(
+    `Cập nhật lúc: <%= l @draft_test.updated_at, format: :default %>`
+  );
+  $('.validate').html('');
+  <% if @draft_test.errors.any? %>
+    <% @draft_test.errors.messages.each do |error| %>
+      $('#<%= error[0] %>').closest('.form-group').children('.validate').html('<%= error[1][0] %>')
+    <% end %>
+  <% end %>
+})

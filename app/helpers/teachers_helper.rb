@@ -5,7 +5,7 @@ module TeachersHelper
 
   def have_type_questions? object, type
     object.questions.each do |question|
-      return true if question['type'] == type
+      return true if question['question_type'] == type
     end
 
     return false
@@ -15,5 +15,13 @@ module TeachersHelper
     File.open("app/assets/images/#{path}", "rb") do |file|
       raw file.read
     end
+  end
+
+  def options_difficulities
+    options = []
+    Settings.test.difficulty.to_h.each do |key, val|
+      options << [t("test.difficulty.#{key}"), val]
+    end
+    options
   end
 end

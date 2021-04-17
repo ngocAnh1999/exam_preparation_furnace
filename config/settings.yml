@@ -2,3 +2,17 @@ user:
   basic_type:
     - Teacher
     - Student
+test:
+  datime_format: "%m/%d/%Y %l:%M %p"
+  difficulty:
+    easy: easy
+    medium: medium
+    hard: hard
+  shared_status:
+    - individual
+    - limited
+    - unlimited
+question:
+  type:
+    multiple_choice: 0
+    essay: 1

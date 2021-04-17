@@ -16,36 +16,48 @@
           <div class="d-flex justify-content-start flex-wrap gutter-ys" id="list-question-card"></div>
 
           <div class="border-bottom border-sidebar gutter-ys"></div>
-          <label class="mt-1">Ngày bắt đầu</label>
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text pl-0">
-                <i class="material-icons">hourglass_top</i>
-              </span>
+          <div class="form-group mb-0">
+            <label class="mt-1">Ngày bắt đầu</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text pl-0">
+                  <i class="material-icons">hourglass_top</i>
+                </span>
+              </div>
+              <%= f.text_field :start_time, id: "start_time",
+                value: @draft_test.start_time&.strftime(Settings.test.datime_format),
+                class: "form-control datetimepicker" %>
             </div>
-            <%= f.text_field :start_time, id: "start_time",
-              class: "form-control datetimepicker", placeholder: "mm/dd/yyyy hh:mm tt" %>
+            <small class="validate text-danger"></small>
           </div>
-          <label class="mt-3">Ngày kết thúc</label>
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text pl-0">
-                <i class="material-icons">hourglass_bottom</i>
-              </span>
+          <div class="form-group mb-0">
+            <label class="mt-3">Ngày kết thúc</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text pl-0">
+                  <i class="material-icons">hourglass_bottom</i>
+                </span>
+              </div>
+              <%= f.text_field :due_time, id: "due_time",
+                value: @draft_test.due_time&.strftime(Settings.test.datime_format),
+                class: "form-control datetimepicker" %>
             </div>
-            <%= f.text_field :due_time, id: "due_time",
-              class: "form-control datetimepicker", placeholder: "mm/dd/yyyy hh:mm tt" %>
+            <small class="validate text-danger"></small>
           </div>
-          <label class="mt-3">Thời gian làm bài (phút)</label>
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text pl-0">
-                <i class="material-icons">timelapse</i>
-              </span>
+          <div class="form-group mb-0">
+            <label class="mt-3">Thời gian làm bài (phút)</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text pl-0">
+                  <i class="material-icons">timelapse</i>
+                </span>
+              </div>
+              <%= f.text_field :doing_time, id: "doing_time",
+                class: "form-control", placeholder: "45" %>
             </div>
-            <%= f.text_field :doing_time, id: "doing_time",
-              class: "form-control", placeholder: "45" %>
+            <small class="validate text-danger"></small>
           </div>
+
           <div class="form-check pl-1">
             <label class="form-check-label">
               <%= f.check_box :unlimited_flag, id: "unlimited_flag",
@@ -68,34 +80,35 @@
           <label for="title">Tiêu đề</label>
           <%= f.text_field :title, id: "title",
             class: "form-control", placeholder: "De kiem tra giua ky..." %>
+          <small class="validate text-danger"></small>
         </div>
         <div class="form-group">
           <label for="description">Mô tả</label>
           <%= f.text_field :description, id: "description",
             class: "form-control", placeholder: "De thi gom 2 phan trac nghiem va tu luan..." %>
+          <small class="validate text-danger"></small>
         </div>
         <div class="form-group">
           <label for="shuffle_count">Trộn đề</label>
           <%= f.text_field :shuffle_count, id: "shuffle_count",
             class: "form-control col-md-2", placeholder: "1" %>
+          <small class="validate text-danger"></small>
         </div>
         <div class="border-bottom border-sidebar my-4"></div>
         <h3 class="title-multichoice d-none">Phần 1: Trắc nghiệm</h3>
-        <%= render partial: 'form_multichoice_question', collection: f.object.questions, as: :question %>
+        <%= render partial: 'form_multichoice_question', collection: @draft_test.questions, as: :question %>
         <div id="multi-choice-question-partial"></div>
 
         <h3 class="title-essay d-none">Phần 2: Tự luận</h3>
-        <%= render partial: 'form_essay_question', collection: f.object.questions, as: :question %>
+        <%= render partial: 'form_essay_question', collection: @draft_test.questions, as: :question %>
         <div id="essay-question-partial"></div>
 
         <div class="d-flex align-content-center">
           <small class="padding-ys time-update" id="time-updated-draft-test">
             Cập nhật lúc: <%= l @draft_test.updated_at, format: :default %>
           </small>
-          <%= f.submit 'Lưu nháp', class: "btn btn-secondary ml-auto border border-sidebar" %>
-          <button type="button" class="btn btn-success"
-            data-toggle="modal" data-target="#modal_delete_question"
-            data-dismiss="modal" data-backdrop="false">Tạo bài test</button>
+          <%= f.submit 'Lưu nháp', class: "btn btn-secondary ml-auto border border-sidebar", id: "submit-draft" %>
+          <%= link_to "Tạo bài test", new_test_teachers_draft_test_path(id: @draft_test.id), class: "btn btn-success new-test" %>
         <div>
       </div>
     </div>

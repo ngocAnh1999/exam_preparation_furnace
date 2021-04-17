@@ -1,5 +1,5 @@
-class QuestionTest < ApplicationRecord
-  belongs_to :question
+class TeacherSharedTest < ApplicationRecord
+  belongs_to :teacher
   belongs_to :test
 
   class << self

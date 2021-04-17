@@ -1,0 +1,130 @@
+<%= form_for @test, url: teachers_tests_path do |f| %>
+  <%= hidden_field_tag :draft_test_id, @draft_test.id  %>
+  <div class="card">
+    <div class="card-body">
+      <div class="form-group row">
+        <div class="form-group col">
+          <label for="level_id">Khối</label>
+          <%= select_tag :level_id, options_for_select(@list_levels), class: "form-control" %>
+        </div>
+        <div class="form-group col">
+          <label for="subject_id">Môn</label>
+          <%= select_tag :subject_id, options_for_select(@list_subjects), class: "form-control" %>
+        </div>
+        <div class="form-group col" id="group_chapter">
+          <label for="test_chapter_id">Chương</label>
+          <%= f.select :chapter_id, options_for_select([]),{}, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="form-group col">
+          <label for="difficulty">Do kho cua bai thi</label>
+          <%= f.select :difficulty, options_for_select(options_difficulities),{}, class: "form-control" %>
+        </div>
+        <div class="form-group col">
+          <label for="test_mark_id">He so diem</label>
+          <%= f.select :mark_id, options_for_select(@list_marks),{}, class: "form-control" %>
+        </div>
+      </div>
+      <label for="test_shared_status">Chia se de thi</label>
+      <div class="form-group">
+        <%= render partial: "radio_share_test", collection: Settings.test.shared_status.to_a, as: :shared_status, locals: {f: f} %>
+      </div>
+      <div class="manage-shared-teacher d-none form-group row">
+        <div class="form-group col">
+          <label>Chon giao vien duoc chia se de thi</label>
+          <%= select_tag :teacher_id, options_for_select([]), class: "form-control" %>
+        </div>
+        <div class="list-shared-teacher form-group col">
+          <label>Danh sach giao vien duoc chon</label>
+          <div class="shared-teachers"></div>
+        </div>
+      </div>
+      <div class="form-group d-flex justify-content-center">
+        <%= link_to "Sua lai de nhap", edit_teachers_draft_test_path(id: @draft_test.id),
+          class: "btn btn-white btn-round" %>
+        <%= f.submit "Tao bai thi", class: "btn btn-success btn-round" %>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(function() {
+      getListChapter();
+    })
+
+    $('#level_id, #subject_id').on('change',()=>getListChapter());
+
+    function getListChapter() {
+      $.ajax({
+        url: '<%= search_chapters_teachers_draft_tests_path %>',
+        method: 'GET',
+        data: {
+          subject: $("#subject_id").val(),
+          level: $("#level_id").val()
+        },
+        dataType: "JSON",
+        success: function(response) {
+          $('#test_chapter_id').empty();
+          $.each(response, function(index, value) {
+            let o = new Option(value[1], value[0]);
+            $(o).html(value[1]);
+            $("#test_chapter_id").append(o);
+          })
+        }
+      })
+    }
+
+    $('#test_shared_status_limited').on('click', function(){
+      let teacher_ids = $('.list-shared-teacher input').map(function(){return $(this).val();}).get();
+
+      $.ajax({
+        url: '<%= teacher_same_subjects_teachers_draft_tests_path %>',
+        method: 'GET',
+        data: {
+          subject_id: $('#subject_id').val(),
+          teacher_ids: $.merge(teacher_ids, '<%= current_user.id %>')
+        },
+        dataType: 'JSON',
+        success: function(response) {
+          $('#teacher_id').html(`<option></option>`);
+          $.each(response, function(index, value) {
+            let o = new Option([value[1], value[2]].join(' '), value[0]);
+            $("#teacher_id").append(o);
+          })
+        }
+      })
+      $('.manage-shared-teacher').removeClass('d-none');
+    })
+
+    $('#test_shared_status_individual, #test_shared_status_unlimited').on('click', function(){
+      if ($('.manage-shared-teacher').hasClass('d-none')) return;
+
+      $('.manage-shared-teacher').addClass('d-none');
+    })
+
+    $('#teacher_id').on('change', function() {
+      let me = this
+      $('.shared-teachers').append(
+        `
+          <div class="d-flex mb-2">
+            <input type="hidden" name="teacher_ids[]" id="teacher_ids" value="${$(me).val()}" />
+            <span class="teacher-name">
+              ${$('#teacher_id option:selected').text()}
+            </span>
+              <i class="material-icons text-danger cursor-pointer p-2"
+                onclick="removeFromListTeachers(this)">person_remove</i>
+          </div>
+        `
+      )
+      $('#teacher_id option:selected').remove();
+    })
+
+    function removeFromListTeachers(me) {
+      let item = $.trim($(me).closest('.d-flex').children('.teacher-name').text())
+      let value = $(me).closest('.d-flex').children('#teacher_ids').val()
+      let o = new Option(item, value);
+      $("#teacher_id").append(o);
+      $(me).closest('.d-flex').remove();
+    }
+  </script>
+<% end %>
