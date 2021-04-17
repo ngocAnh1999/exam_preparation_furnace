@@ -17508,6 +17508,7 @@ footer .pull-center {
 .bootstrap-datetimepicker-widget.dropdown-menu.top.open {
   margin-top: auto;
   margin-bottom: 27px;
+  z-index: 999999 !important;
 }
 
 .bootstrap-datetimepicker-widget.dropdown-menu.pull-right:before {

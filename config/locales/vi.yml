@@ -6,6 +6,11 @@ vi:
       select_teacher_register: "Đăng ký với tài khoản giáo viên"
       select_student_register: "Đăng ký với tài khoản học sinh"
       select_school_admin_register: "Đăng ký với tài khoản trường học"
+  test:
+    difficulty:
+      easy: De
+      medium: Trung binh
+      hard: Kho
   views:
     pagination:
       first: "&laquo; Dau"
@@ -13,6 +18,12 @@ vi:
       previous: "&lsaquo; Truoc"
       next: "Sau &rsaquo;"
       truncate: "&hellip;"
+  teachers:
+    draft_tests:
+      radio_share_test:
+        individual: Khong chia se
+        limited: Gioi han nguoi chia se
+        unlimited: Chia se cho giao vien trong truong
   helpers:
     page_entries_info:
       one_page:

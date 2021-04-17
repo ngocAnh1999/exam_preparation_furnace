@@ -1,6 +1,7 @@
 class Teachers::DraftTestsController < TeachersController
   skip_before_action :verify_authenticity_token, :only => [:update]
-  before_action :load_draft_test, only: %i[edit update]
+  before_action :load_draft_test, only: %i[edit update new_test]
+  before_action :load_references, only: :new_test
 
   def index
     @draft_tests = current_user.draft_tests.page params[:page]
@@ -27,11 +28,9 @@ class Teachers::DraftTestsController < TeachersController
 
   def update
     respond_to do |format|
-      if @draft_test.update draft_test_params_converted
-        format.json { render json: { updated_at: l(@draft_test.updated_at, format: :default) } }
-      else
-        format.html { render :edit, notice: "error message" }
-      end
+      @draft_test.update draft_test_params_converted
+      @validates = @draft_test.errors.messages unless @draft_test.valid?(:test)
+      format.js
     end
   end
 
@@ -39,6 +38,19 @@ class Teachers::DraftTestsController < TeachersController
     @list_chapters = Chapter.by_subject_and_level params[:subject], params[:level]
     respond_to do |format|
       format.json { render json: @list_chapters }
+    end
+  end
+
+  def new_test
+    @test = current_teacher.tests.build
+  end
+
+  def teacher_same_subjects
+    @teachers = current_school.subjects.find(params[:subject_id])
+                              &.teachers&.pluck(:id, :first_name, :last_name)
+                              .uniq.reject {|item| params[:teacher_ids]&.include?(item[0].to_s) }
+    respond_to do |format|
+      format.json { render json: @teachers }
     end
   end
 
@@ -66,7 +78,7 @@ class Teachers::DraftTestsController < TeachersController
       questions: [
         :content,
         :suggestion,
-        :type,
+        :question_type,
         answers_attributes: [:content, :is_correct, :position]
       ]
     )
