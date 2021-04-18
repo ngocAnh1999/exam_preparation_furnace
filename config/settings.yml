@@ -4,6 +4,7 @@ user:
     - Student
 test:
   datime_format: "%m/%d/%Y %l:%M %p"
+  show_datetime: "%d/%m/%Y %l:%M %p"
   difficulty:
     easy: easy
     medium: medium

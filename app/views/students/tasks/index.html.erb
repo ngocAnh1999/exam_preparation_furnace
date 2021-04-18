@@ -23,12 +23,16 @@
   </ul>
   <div class="tab-content tab-space">
     <div class="tab-pane active" id="unsubmitted_task">
-      <%= render partial: "task", collection: @tasks, as: :task,
-        locals: {task_status: Settings.task.status.unsubmitted} %>
+      <div class="row">
+        <%= render partial: "task", collection: @tasks, as: :task,
+          locals: {task_status: Settings.task.status.unsubmitted} %>
+      </div>
     </div>
     <div class="tab-pane" id="submitted_task">
-      <%= render partial: "task", collection: @tasks, as: :task,
-        locals: {task_status: Settings.task.status.submitted} %>
+      <div class="row">
+        <%= render partial: "task", collection: @tasks, as: :task,
+          locals: {task_status: Settings.task.status.submitted} %>
+      </div>
     </div>
     <div class="tab-pane" id="expired_task">
       <%= render partial: "task", collection: @tasks, as: :task,
@@ -44,7 +48,7 @@
   $('#nav-unsubmitted-task').on('click', () => blankUnsubmittedTask())
 
   function blankUnsubmittedTask() {
-    if ($('#unsubmitted_task').children('.task-item').length == 0) {
+    if ($('#unsubmitted_task .row').children('.task-item').length == 0) {
       $('#unsubmitted_task').html(
         `<h2 class="text-center text-mute">Bạn chưa có đề mới ^.^</h2>`
       )
@@ -52,7 +56,7 @@
   }
 
   $('#nav-submitted-task').on('click', function() {
-    if ($('#submitted_task').children('.task-item').length == 0) {
+    if ($('#submitted_task .row').children('.task-item').length == 0) {
       $('#submitted_task').html(
         `<h2 class="text-center text-mute">Bạn chưa có đề nào hoàn thành.</h2>`
       )
@@ -60,7 +64,7 @@
   })
 
   $('#nav-expired-task').on('click', function() {
-    if ($('#expired_task').children('.task-item').length == 0) {
+    if ($('#expired_task .row').children('.task-item').length == 0) {
       $('#expired_task').html(
         `<h2 class="text-center text-mute">Bạn chưa có đề nào quá hạn.</h2>`
       )

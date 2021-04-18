@@ -33,6 +33,7 @@ class SendTestService
     list_student_ids = student_ids&.flatten&.uniq
     tasks = assigned_group_ids&.map do |assigned_group_id|
       list_student_ids&.map do |student_id|
+        binding.pry
         {
           student_id: student_id,
           assigned_group_id: assigned_group_id,
@@ -85,11 +86,14 @@ class SendTestService
   end
 
   def shuffle_questions
-    list_questions = @questions&.as_json&.map do |item|
+    list_questions = []
+    @questions&.as_json&.each do |item|
       item["answers"] = @answers.select {|answer| answer["question_id"] == item["id"] }
                                 &.shuffle(random: random_shuffle(item["id"]))
-      item["student_answer"] = nil
-      item
+      item["student_answers"] = []
+      item["text_answer"] = nil
+      list_questions << item
     end
+    list_questions
   end
 end
