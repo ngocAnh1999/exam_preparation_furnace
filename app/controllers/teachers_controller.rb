@@ -3,20 +3,20 @@ class TeachersController < ApplicationController
 
   before_action :authenticate_user!
 
-  # rescue_from ActiveRecord::StatementInvalid do |e|
-  #   flash.now[:alert] = "Thao tac cua ban da xay ra loi"
-  #   redirect_to teachers_root_path
-  # end
+  rescue_from ActiveRecord::StatementInvalid do |e|
+    flash.now[:alert] = "Thao tac cua ban da xay ra loi"
+    redirect_to teachers_root_path
+  end
 
-  # rescue_from NoMethodError do |e|
-  #   flash.now[:alert] = "Server loi"
-  #   redirect_to teachers_root_path
-  # end
+  rescue_from NoMethodError do |e|
+    flash.now[:alert] = "Server loi"
+    redirect_to teachers_root_path
+  end
 
-  # rescue_from ActiveRecord::RecordNotFound do
-  #   flash.now[:alert] = "Ban ghi khong ton tai"
-  #   redirect_to teachers_root_path
-  # end
+  rescue_from ActiveRecord::RecordNotFound do
+    flash.now[:alert] = "Ban ghi khong ton tai"
+    redirect_to teachers_root_path
+  end
 
   private
 

@@ -38,5 +38,11 @@ Rails.application.routes.draw do
         get :new_test, on: :member
       end
     end
+
+    namespace :students do
+      root to: "tasks#index"
+
+      resources :tasks, concerns: :paginatable
+    end
   end
 end
