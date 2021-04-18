@@ -24,7 +24,7 @@
     clearInterval(intervalAutoSubmit);
   }
 
-  $('.new-test').on('click', () => stopAutoSubmit());
+  $('.new-test', '#link-to-back-path').on('click', () => stopAutoSubmit());
 
   $('.datetimepicker').datetimepicker({
     icons: {
