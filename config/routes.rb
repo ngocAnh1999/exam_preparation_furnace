@@ -42,7 +42,10 @@ Rails.application.routes.draw do
     namespace :students do
       root to: "tasks#index"
 
-      resources :tasks, concerns: :paginatable
+      resources :tasks, concerns: :paginatable do
+        get :before_doing_task, on: :member
+        get :after_doing_task, on: :member
+      end
     end
   end
 end

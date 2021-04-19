@@ -1,0 +1,16 @@
+<div class="card col-md-5 mx-auto">
+  <div class="card-body text-center">
+    <h2>Bài kiểm tra: <%= @task.test_title %></h2>
+    <p class="text-success">Đã kết thúc</p>
+    <p class="text-mute">Mô tả: <%= @task.test_description %></p>
+    <p>Thời gian mở đề: <%= @task.test_start_time.strftime(Settings.test.show_datetime) %></p>
+    <p>Hạn nộp bài: <%= @task.test_due_time.strftime(Settings.test.show_datetime) %></p>
+    <p>Thời gian làm:
+      <% if @task.test_unlimited_flag %>
+        <span class="text-primary">Không giới hạn thời gian</span>
+      <% else %>
+        <%= @task.test_doing_time %> phút
+      <% end %>
+    </p>
+  </div>
+</div>

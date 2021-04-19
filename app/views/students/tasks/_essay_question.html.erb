@@ -1,0 +1,7 @@
+<% if question["question_type"].eql? Settings.question.type.essay %>
+<div class="form-group" id="question_<%= question['id'] %>">
+  <h4><span class="question-title"></span>: <%= question["content"] %></h4>
+  <%= hidden_field_tag 'task[student_answers][][question_id]', question['id'] %>
+  <p>Trả lời:</p>
+  <%= text_area_tag 'task[student_answers][][text_answer]',nil, class: "form-control" %>
+<% end %>

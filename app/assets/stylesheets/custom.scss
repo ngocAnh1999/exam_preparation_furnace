@@ -68,3 +68,10 @@ svg {
 .bootstrap-datetimepicker-widget{
   z-index:99999 !important
 }
+
+.notransition {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -o-transition: none !important;
+  transition: none !important;
+}
