@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   private
 
   def authenticate_user!
-    redirect_to new_user_session_path, notice: "You must login" unless user_signed_in?
+    redirect_to new_user_session_path, notice: "Bạn chưa đăng nhập!" unless user_signed_in?
   end
 
   def configure_permitted_parameters

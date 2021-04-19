@@ -1,0 +1,20 @@
+<div class="col-md-1">
+  <ul class="nav form-group bmd-form-group flex-column sticky-taskbar" role="tablist" id="sidebar-teacher">
+    <li class="nav-item">
+      <%= link_to students_root_path, class: "btn btn-white btn-fab btn-round",
+        "data-toggle": "tooltip", "data-placement": "right", title: "Danh sách đề bài",
+        "data-container": "body" do %>
+        <i class="material-icons text-muted">assignment</i>
+        <div class="ripple-container"></div>
+      <% end %>
+    </li>
+    <li class="nav-item">
+      <%= link_to "#", class: "btn btn-white btn-fab btn-round",
+        "data-toggle": "tooltip", "data-placement": "right", title: "Tài liệu được chia sẻ",
+        "data-container": "body" do %>
+        <i class="material-icons text-muted">folder</i>
+        <div class="ripple-container"></div>
+      <% end %>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,19 @@
+<% if task.send("#{task_status}?") %>
+  <div class="col-md-4 task-item">
+    <%= link_to before_doing_task_students_task_path(id: task.id),
+      class: "card cursor-pointer" do %>
+      <div class="card-body text-center">
+        <h4 class=""><%= task.test_title %></h4>
+        <p>Mở đề lúc:
+          <%= task.test_start_time.strftime(Settings.test.show_datetime) %></p>
+        <p>Hạn nộp bài:
+          <%= task.test_due_time.strftime(Settings.test.show_datetime) %></p>
+        <% if task.test_unlimited_flag.eql? true %>
+          <p class="text-info">không giới hạn thời gian làm bài</p>
+        <% else %>
+          <p>Thời gian làm bài: <%= task.test_doing_time %></p>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

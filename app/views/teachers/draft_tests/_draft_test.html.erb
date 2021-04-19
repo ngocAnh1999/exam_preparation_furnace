@@ -3,8 +3,16 @@
   <td><%= draft_test.title %></td>
   <td><%= subject %></td>
   <td><%= draft_test.description %></td>
-  <td><%= l draft_test.start_time, format: :default %></td>
-  <td><%= l draft_test.due_time, format: :default %></td>
+  <td>
+    <% if draft_test.start_time %>
+      <%= l draft_test.start_time, format: :default %>
+    <% end %>
+  </td>
+  <td>
+    <% if draft_test.due_time %>
+      <%= l draft_test.due_time, format: :default %>
+    <% end %>
+  </td>
   <td><%= draft_test.doing_time %> phút</td>
   <td><%= l draft_test.created_at, format: :default %></td>
 

@@ -28,7 +28,8 @@ class Teachers::DraftTestsController < TeachersController
 
   def update
     respond_to do |format|
-      @draft_test.update draft_test_params_converted
+      @draft_test.assign_attributes draft_test_params_converted
+      @draft_test.save(validate: false)
       @validates = @draft_test.errors.messages unless @draft_test.valid?(:test)
       format.js
     end
@@ -92,6 +93,8 @@ class Teachers::DraftTestsController < TeachersController
   end
 
   def datetime_convert str
+    return "" if str.blank?
+
     Time.zone.strptime(str, Settings.test.datime_format)
   end
 end

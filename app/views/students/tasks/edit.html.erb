@@ -1,0 +1,120 @@
+<%= form_for @task, url: students_task_path, remote: true do |f| %>
+  <div class="row">
+    <div class="col-md-3 px-1">
+      <div class="card">
+        <div class="card-body">
+          <div class="form-group">
+            <% if @task.test_unlimited_flag %>
+              <span class="text-mute">Không giới hạn thời gian</span>
+            <% else %>
+              <button class="btn btn-round btn-white text-primary">
+                <i class="material-icons">schedule</i>
+                <span class="display-timer"></span>
+              </button>
+            <% end %>
+          </div>
+          <div class="row list-card-question">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col pl-1">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="text-center"><%= @task.test_title %></h3>
+          <p class="text-center"><%= @task.test_description %></p>
+          <div class="form-group text-center">
+            <p>Ngày mở đề: <%= l @task.test_start_time, format: :default %></p>
+            <p>Hạn nộp bài: <%= l @task.test_due_time, format: :default %></p>
+            <p>Đề thi gồm:
+              <%= "#{@task.count_multiple_choice} câu trắc nghiệm" %>;
+              <%= "#{@task.count_essay} câu tự luận" %>
+            </p>
+          </div>
+          <div class="border-bottom border-sidebar my-4"></div>
+          <div class="form-group">
+            <% unless @task.count_multiple_choice.eql? 0 %>
+              <h3 class="text-mute">Phần 1: Trắc nghiệm</h3>
+              <%= render partial: "students/tasks/multiple_choice_question", collection: @task.answers, as: :question %>
+            <% end %>
+
+            <% unless @task.count_essay.eql? 0 %>
+              <h3 class="text-mute">Phần 2: Tự luận</h3>
+              <%= render partial: "students/tasks/essay_question", collection: @task.answers, as: :question %>
+            <% end %>
+          </div>
+          <div class="border-bottom border-sidebar my-4"></div>
+          <div class="form-group text-center">
+            <%= hidden_field_tag :submit_flag, true %>
+            <%= f.submit "Nộp bài", class: "btn btn-success btn-round btn-submit" %>
+            <%= submit_tag "Auto submit", class: "d-none btn-autosubmit" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<script>
+  var intervalTimer = null;
+
+  $(function(){
+    <% unless @task.test_unlimited_flag %>
+      let doing_time = parseInt("<%= student_doing_time(@task) %>")
+      intervalTimer = startTimer(doing_time);
+    <% end %>
+    setupQuestion();
+  })
+
+  function startTimer(duration) {
+    setInterval(function () {
+      minutes = parseInt(duration / 60, 10);
+      seconds = parseInt(duration % 60, 10);
+
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+
+      $('.display-timer').html(`${minutes}: ${seconds}`);
+      if(minutes <= 1 && !$('.display-timer').hasClass('text-danger')) {
+        $('.display-timer').addClass('text-danger');
+      }
+      autoSubmit();
+      if (--duration < 0) {
+        stopTimmer();
+        $('.btn-submit').click();
+      }
+    }, 1000);
+  }
+
+  function stopTimmer() {
+    clearInterval(intervalTimer);
+  }
+
+  function autoSubmit() {
+    $('#submit_flag').val("false");
+    $('.btn-autosubmit').click();
+  }
+
+  $('.btn-submit').on('click', function(e) {
+    stopTimmer();
+    $('#submit_flag').val("true");
+  })
+
+  function setupQuestion() {
+    $('.list-card-question').html('')
+    $('.question-title').each(function(index) {
+      $(this).html(`Câu ${index+1}`);
+      question_id = $(this).closest('.form-group').attr('id')
+      $('.list-card-question').append(
+        `
+          <div class="col-md-4 px-1">
+            <a href="#${question_id}" class="card my-2 cursor-pointer">
+              <div class="text-center m-2">
+                Câu ${index+1}
+              </div>
+            </a>
+          </div>
+        `
+      )
+    })
+  }
+</script>
+<% end %>

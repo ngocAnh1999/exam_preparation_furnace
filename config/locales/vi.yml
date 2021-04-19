@@ -13,12 +13,14 @@ vi:
       hard: Kho
   views:
     pagination:
-      first: "&laquo; Dau"
-      last: "Cuoi &raquo;"
-      previous: "&lsaquo; Truoc"
+      first: "&laquo; Đầu"
+      last: "Cuối &raquo;"
+      previous: "&lsaquo; Trước"
       next: "Sau &rsaquo;"
       truncate: "&hellip;"
   teachers:
+    warning:
+      not_correct: Hãy đăng nhập với tài khoản giáo viên
     draft_tests:
       radio_share_test:
         individual: Khong chia se
@@ -36,3 +38,6 @@ vi:
   time:
     formats:
       default: "%A, %d %B, %Y %I:%M:%S %p"
+  students:
+    warning:
+      not_correct: Hãy đăng nhập với tài khoản học sinh
