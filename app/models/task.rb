@@ -23,7 +23,7 @@ class Task < ApplicationRecord
   end
 
   def have_doing_time?(time_now)
-    tim_now < started_at + test_doing_time.minutes
+    time_now < started_at + test_doing_time.minutes
   end
 
   def expired?

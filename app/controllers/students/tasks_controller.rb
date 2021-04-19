@@ -11,11 +11,24 @@ class Students::TasksController < StudentsController
   def show; end
 
   def edit
-    # @task.update started_at: Time.zone.now unless @task.started_at?
-    
+    @task.update started_at: Time.zone.now unless @task.started_at?
   end
 
-  def update; end
+  def update
+    respond_to do |format|
+      @task.assign_attributes(ended_at: Time.zone.now) if params[:submit_flag] == "true"
+
+      if @task.update permit_task
+        if params[:submit_flag] == "true"
+          format.html { redirect_to after_doing_task_students_task_path, notice: "Chúc mừng bạn đã nộp bài thành công!" }
+        else
+          format.html { render :edit }
+        end
+      else
+        format.html { render :edit, alert: "Có lỗi trong lúc nộp bài" }
+      end
+    end
+  end
 
   def before_doing_task; end
 
@@ -27,13 +40,26 @@ class Students::TasksController < StudentsController
     @task = current_user.tasks.find(params[:id])
   end
 
+  def permit_task
+    params.require(:task).permit(
+      student_answers: [
+        :question_id,
+        :text_answer,
+        answers: [
+          :answer_id,
+          :check
+        ]
+      ]
+    )
+  end
+
   def doing_task_permission
     time_now = Time.zone.now
     if time_now < @task.test_start_time
       flash[:alert] = "Chưa đến giờ làm bài"
       redirect_to before_doing_task_students_task_path(id: @task.id)
     elsif @task.submitted? || @task.expired?
-      flash[:alert] = "Thời gian làm bài đã kết thúc"
+      flash[:notice] = "Bạn đã kết thúc bài thi của mình"
       redirect_to after_doing_task_students_task_path(id: @task.id)
     end
   end
