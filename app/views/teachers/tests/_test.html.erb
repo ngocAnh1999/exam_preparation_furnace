@@ -1,6 +1,10 @@
 <tr>
   <td class="text-center py-auto">#</td>
-  <td><%= _test.title %></td>
+  <td>
+    <%= link_to list_tasks_teachers_test_path(id: _test.id) do %>
+      <%= _test.title %>
+    <% end %>
+  </td>
   <td><%= subject %></td>
   <td><%= _test.description %></td>
   <td><%= _test.start_time.strftime Settings.test.datime_format %></td>

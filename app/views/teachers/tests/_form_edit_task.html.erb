@@ -1,0 +1,33 @@
+<%= form_for @task, url: marking_teachers_test_path(id: @test.id), method: :patch do |f| %>
+  <div class="form-group padding-ys">
+    <%= hidden_field_tag :task_id, @task.id %>
+    <% unless @task.count_multiple_choice.eql? 0 %>
+      <h3 class="text-mute">Phần 1: Trắc nghiệm</h3>
+      <p> Học sinh làm đúng <%= @task.auto_mark %> câu trên tổng số <%= @task.count_multiple_choice %> câu.
+      <%= render partial: "teachers/tests/multiple_choice_question", collection: @task.answers, as: :question %>
+    <% end %>
+
+    <% unless @task.count_essay.eql? 0 %>
+      <h3 class="text-mute">Phần 2: Tự luận</h3>
+      <%= render partial: "teachers/tests/essay_question", collection: @task.answers, as: :question %>
+    <% end %>
+  </div>
+  <div class="form-group text-center">
+    <%= f.submit "Lưu điểm", class: "btn btn-success" %>
+  </div>
+<% end %>
+<script>
+  $(function() {
+    setupQuestion();
+  })
+
+  function viewAutoMark() {
+  }
+
+  function setupQuestion() {
+    $('.question-title').each(function(index) {
+      $(this).html(`Câu ${index+1}`);
+      question_id = $(this).closest('.form-group').attr('id')
+    })
+  }
+</script>

@@ -1,0 +1,21 @@
+<div class="card m-0 mb-2 cursor-pointer card-student"
+  onclick="getEditTask(this, '<%= task.id %>')">
+  <div class="card-body text-center">
+    <%= task.student.full_name %>
+    <p>Trạng thái làm bài:
+      <% if task.score? %>
+        <span class="<%= "text-success" if task.score? %>">
+          Đã chấm<br/>(Điểm: <%= task.score %> / 10)
+        </span>
+      <% elsif task.submitted? %>
+        Chưa chấm
+      <% elsif task.expired? %>
+        <span class="<%= "text-danger" if task.expired? %>">Quá hạn nộp bài</span>
+      <% elsif task.unsubmitted? %>
+        Chưa nộp bài
+      <% else %>
+        Chưa làm bài
+      <% end %>
+    </p>
+  </div>
+</div>

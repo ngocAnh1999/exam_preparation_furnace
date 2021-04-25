@@ -42,11 +42,17 @@ class Students::TasksController < StudentsController
 
   def permit_task
     params.require(:task).permit(
-      student_answers: [
-        :question_id,
+      answers: [
+        :id,
+        :content,
+        :suggestion,
+        :question_type,
+        :score,
         :text_answer,
         answers: [
-          :answer_id,
+          :id,
+          :content,
+          :is_correct,
           :check
         ]
       ]
@@ -74,7 +80,7 @@ class Students::TasksController < StudentsController
   def before_doing_task_permission
     return if !@task.submitted? && !@task.expired?
 
-    flash[:alert] = "Thời gian làm bài đã kết thúc"
+    flash[:notice] = "Thời gian làm bài đã kết thúc"
     redirect_to after_doing_task_students_task_path(id: @task.id)
   end
 end
