@@ -51,23 +51,35 @@ class Task < ApplicationRecord
       end
       mark = mark + 1 if failed == 0
     end
-    mark
+    mark * (10 - max_essay_score) / count_multiple_choice
   end
 
   def update_and_map_score! task_params
     self.assign_attributes task_params
-    essay_score = 0
     essay_mark = 0
     task_params[:answers].each do |question|
       if question['question_type'].to_i == Settings.question.type.essay
-        essay_score = essay_score + question['score'].to_f
         essay_mark = essay_mark + question['mark'].to_f
       end
     end
-    multiple_mark = auto_mark * (10 - essay_score) / count_multiple_choice
 
-    self.score = multiple_mark + essay_mark
+    self.score = auto_mark + essay_mark
 
     save!
+  end
+
+  def max_essay_score
+    essay_score = 0
+    answers.each do |question|
+      if question['question_type'].to_i == Settings.question.type.essay
+        essay_score = essay_score + question['score'].to_f
+      end
+    end
+    essay_score
+  end
+
+
+  def student_score
+    score || auto_mark
   end
 end

@@ -42,3 +42,4 @@ toastr.options = {
 }
 
 $.fn.datetimepicker = require('material-kit/assets/js/plugins/bootstrap-datetimepicker.js');
+$('.collapse').collapse();

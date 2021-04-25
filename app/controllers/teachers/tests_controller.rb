@@ -36,7 +36,7 @@ class Teachers::TestsController < TeachersController
   end
 
   def list_tasks
-    @tasks = @test.tasks.includes(:student)
+    @tasks = @test.tasks.includes(:student, :assigned_group)
   end
 
   def edit_task
@@ -51,10 +51,12 @@ class Teachers::TestsController < TeachersController
   end
 
   def publish_score
-    @test.assigned_groups.update_all published_at: Time.zone.now
+    ActiveRecord::Base.transaction do
+      @assigned_group = @test.assigned_groups.find(params[:assigned_group_id])
+      @assigned_group.update published_at: Time.zone.now unless @assigned_group.published_at?
 
-    flash[:notice] = "Đáp án đã được công bố cho học sinh!"
-    redirect_to teachers_root_path
+      render partial: "teachers/tests/collapse_group", collection: @test.assigned_groups, as: :assigned_group
+    end
   end
 
   private

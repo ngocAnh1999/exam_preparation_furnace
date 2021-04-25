@@ -1,0 +1,21 @@
+<div class="border text-center">
+  <h4 class="mb-0" id="assigned_group_<%= assigned_group.id %>">
+    <button class="btn btn-link p-1" data-toggle="collapse" data-target="#collapse<%= assigned_group.id %>" aria-expanded="true" aria-controls="collapseOne">
+      Lớp
+      <%= assigned_group.groupable_type.constantize.find_by(id: assigned_group.groupable_id).name %>
+      <i class="material-icons">expand_more</i>
+    </button>
+  </h4>
+  <% if assigned_group.published_at? %>
+    <p class="text-success">(Đã công bố điểm)</p>
+  <% else %>
+    <button class="btn btn-white btn-round text-primary" onclick="publishScore(this, <%= assigned_group.id %>)">
+      Công bố điểm >>
+    </button>
+  <% end %>
+  <div id="collapse<%= assigned_group.id %>" class="collapse" aria-labelledby="assigned_group_<%= assigned_group.id %>" data-parent="#accordion">
+    <div class="card-body">
+      <%= render partial: "teachers/tests/card_student", collection: assigned_group.tasks, as: :task %>
+    </div>
+  </div>
+</div>

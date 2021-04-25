@@ -3,7 +3,7 @@
     <%= hidden_field_tag :task_id, @task.id %>
     <% unless @task.count_multiple_choice.eql? 0 %>
       <h3 class="text-mute">Phần 1: Trắc nghiệm</h3>
-      <p> Học sinh làm đúng <%= @task.auto_mark %> câu trên tổng số <%= @task.count_multiple_choice %> câu.
+      <p class="text-success border border-radius p-1">Số đáp án đúng: <%= @task.auto_mark %> / <%= @task.count_multiple_choice %> câu.
       <%= render partial: "teachers/tests/multiple_choice_question", collection: @task.answers, as: :question %>
     <% end %>
 

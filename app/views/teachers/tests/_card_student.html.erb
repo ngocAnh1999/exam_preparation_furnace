@@ -1,7 +1,7 @@
 <div class="card m-0 mb-2 cursor-pointer card-student"
   onclick="getEditTask(this, '<%= task.id %>')">
   <div class="card-body text-center">
-    <%= task.student.full_name %>
+    Học sinh: <%= task.student.full_name %>
     <p>Trạng thái làm bài:
       <% if task.score? %>
         <span class="<%= "text-success" if task.score? %>">

@@ -33,7 +33,7 @@ Rails.application.routes.draw do
         get :list_tasks, on: :member
         patch :marking, on: :member
         get :edit_task, on: :member
-        patch :publish_score, on: :member
+        get :publish_score, on: :member
         patch :marking, on: :member
       end
 
