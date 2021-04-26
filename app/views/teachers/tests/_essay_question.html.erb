@@ -13,7 +13,5 @@
       <label>Chấm điểm:</label>
       <%= text_field_tag 'task[answers][][mark]', question['mark'], class: "form-control" %>
     </div>
-    <label>Nhận xét của giáo viên:</label>
-    <%= text_area_tag 'task[teacher_comment]', @task.teacher_comment, class: "form-control"  %>
   </div>
 <% end %>

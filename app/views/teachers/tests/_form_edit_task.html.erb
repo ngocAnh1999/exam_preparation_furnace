@@ -2,15 +2,22 @@
   <div class="form-group padding-ys">
     <%= hidden_field_tag :task_id, @task.id %>
     <% unless @task.count_multiple_choice.eql? 0 %>
-      <h3 class="text-mute">Phần 1: Trắc nghiệm</h3>
-      <p class="text-success border border-radius p-1">Số đáp án đúng: <%= @task.auto_mark %> / <%= @task.count_multiple_choice %> câu.
+      <h3 class="text-mute">Phần 1: Trắc nghiệm
+        <span class="text-success border border-radius p-1"><%= @task.auto_mark %> điểm.</span>
+      </h3>
       <%= render partial: "teachers/tests/multiple_choice_question", collection: @task.answers, as: :question %>
+      <label>Nhận xét của giáo viên:</label>
+      <%= text_area_tag 'task[teacher_comment]', @task.teacher_comment, class: "form-control"  %>
     <% end %>
 
     <% unless @task.count_essay.eql? 0 %>
       <h3 class="text-mute">Phần 2: Tự luận</h3>
       <%= render partial: "teachers/tests/essay_question", collection: @task.answers, as: :question %>
     <% end %>
+    <div class="form-group">
+      <label class="text-bold">Nhận xét của giáo viên:</label>
+      <%= text_area_tag 'task[teacher_comment]', @task.teacher_comment, class: "form-control"  %>
+    </div>
   </div>
   <div class="form-group text-center">
     <%= f.submit "Lưu điểm", class: "btn btn-success" %>

@@ -12,5 +12,11 @@
         <%= @task.test_doing_time %> phút
       <% end %>
     </p>
+    <% if @task.is_published? %>
+      <div class="form-group text-bold">Điểm của bạn: <%= @task.student_score %></div>
+      <div class="form-group">
+        <%= link_to "Xem đáp án", students_task_path(id: @task.id), class: "btn btn-white btn-round text-success" %>
+      </div>
+    <% end %>
   </div>
 </div>

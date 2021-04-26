@@ -1,0 +1,13 @@
+<% if question["question_type"].to_i.eql? Settings.question.type.essay %>
+<div class="form-group" id="question_<%= question['id'] %>">
+  <h4><span class="question-title"></span>(<%= question['score'] %> điểm): <%= question["content"] %></h4>
+  <p>Đáp án của bạn:</p>
+  <%= text_area_tag 'task[answers][][text_answer]', question['text_answer'], class: "form-control px-2", disabled: true %>
+  <div class="form-group mt-3">
+    <div class="form-group col-md-3 pl-0">
+      <p>Điểm của giáo viên:
+        <span class="text-success"><%= question['mark'] %> điểm.</span>
+      </p>
+    </div>
+  </div>
+<% end %>

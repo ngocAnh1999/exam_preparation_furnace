@@ -1,0 +1,8 @@
+<% if question["question_type"].to_i.eql? Settings.question.type.multiple_choice %>
+  <div class="form-group" id="question_<%= question['id'] %>">
+    <h4><span class="question-title"></span>: <%= question["content"] %></h4>
+    <div class="ml-3">
+      <%= render partial: "students/tasks/answer", collection: question["answers"], as: :ans %>
+    </div>
+  </div>
+<% end %>
