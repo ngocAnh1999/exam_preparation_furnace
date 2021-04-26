@@ -16,4 +16,8 @@ class User < ApplicationRecord
   scope :students, ->{ where type: :Student }
   scope :school_admins, ->{ where type: :SchoolAdmin }
   scope :managers, ->{ where type: :Manager }
+
+  def full_name
+    [first_name, last_name].join(" ")
+  end
 end

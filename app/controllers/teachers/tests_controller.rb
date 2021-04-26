@@ -1,6 +1,7 @@
 class Teachers::TestsController < TeachersController
   before_action :load_draft_test, only: :create
-  before_action :load_test, only: %i[send_test assigned_test]
+  before_action :load_test, except: %i[index create]
+  before_action :load_task, only: [:edit_task, :marking]
 
   def index
     @tests = current_user.tests.page params[:page]
@@ -34,6 +35,30 @@ class Teachers::TestsController < TeachersController
     end
   end
 
+  def list_tasks
+    @tasks = @test.tasks.includes(:student, :assigned_group)
+  end
+
+  def edit_task
+    render partial: "teachers/tests/form_edit_task"
+  end
+
+  def marking
+    @task.update_and_map_score! task_params
+
+    flash[:notice] = "Cập nhật điểm thành công!"
+    redirect_to list_tasks_teachers_test_path(id: @test.id)
+  end
+
+  def publish_score
+    ActiveRecord::Base.transaction do
+      @assigned_group = @test.assigned_groups.find(params[:assigned_group_id])
+      @assigned_group.update published_at: Time.zone.now unless @assigned_group.published_at?
+
+      render partial: "teachers/tests/collapse_group", collection: @test.assigned_groups, as: :assigned_group
+    end
+  end
+
   private
 
   def test_params
@@ -45,11 +70,36 @@ class Teachers::TestsController < TeachersController
     )
   end
 
+  def task_params
+    params.require(:task).permit(
+      :teacher_comment,
+      answers: [
+        :id,
+        :content,
+        :suggestion,
+        :question_type,
+        :score,
+        :mark,
+        :text_answer,
+        answers: [
+          :id,
+          :content,
+          :is_correct,
+          :check
+        ]
+      ]
+    )
+  end
+
   def load_draft_test
     @draft_test = current_user.draft_tests.find params[:draft_test_id]
   end
 
   def load_test
     @test = current_user.tests.find params[:id]
+  end
+
+  def load_task
+    @task = @test.tasks.find(params[:task_id])
   end
 end

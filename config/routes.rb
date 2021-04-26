@@ -30,6 +30,11 @@ Rails.application.routes.draw do
       resources :tests, concerns: :paginatable do
         get :send_test, on: :member
         post :assigned_test, on: :member
+        get :list_tasks, on: :member
+        patch :marking, on: :member
+        get :edit_task, on: :member
+        get :publish_score, on: :member
+        patch :marking, on: :member
       end
 
       resources :draft_tests, concerns: :paginatable do

@@ -34,9 +34,52 @@ class Task < ApplicationRecord
     define_method "count_#{item}" do
       count = 0
       answers.each do |ans|
-        count = count+ 1 if ans["question_type"] == Settings.question.type.to_h[item].to_i
+        count = count+ 1 if ans["question_type"].to_i == Settings.question.type.to_h[item].to_i
       end
       count
     end
+  end
+
+  def auto_mark
+    mark = 0
+    answers.each do |question|
+      next if question['question_type'].to_i == Settings.question.type.essay
+
+      failed = 0
+      question['answers']&.each do |answer|
+        failed = failed + 1 unless answer['check'] == answer['is_correct']
+      end
+      mark = mark + 1 if failed == 0
+    end
+    mark * (10 - max_essay_score) / count_multiple_choice
+  end
+
+  def update_and_map_score! task_params
+    self.assign_attributes task_params
+    essay_mark = 0
+    task_params[:answers].each do |question|
+      if question['question_type'].to_i == Settings.question.type.essay
+        essay_mark = essay_mark + question['mark'].to_f
+      end
+    end
+
+    self.score = auto_mark + essay_mark
+
+    save!
+  end
+
+  def max_essay_score
+    essay_score = 0
+    answers.each do |question|
+      if question['question_type'].to_i == Settings.question.type.essay
+        essay_score = essay_score + question['score'].to_f
+      end
+    end
+    essay_score
+  end
+
+
+  def student_score
+    score || auto_mark
   end
 end

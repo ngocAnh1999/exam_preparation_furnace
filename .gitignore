@@ -53,4 +53,4 @@ test/fixtures/*.yml
 
 app/uploaders/*
 public/uploads/ckeditor/pictures/*
-.vscode
+.vscode/*

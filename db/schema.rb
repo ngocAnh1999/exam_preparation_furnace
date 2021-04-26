@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_19_145051) do
+ActiveRecord::Schema.define(version: 2021_04_19_204057) do
 
   create_table "answers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "content"
@@ -118,6 +118,7 @@ ActiveRecord::Schema.define(version: 2021_04_19_145051) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "position"
+    t.float "score", limit: 53, default: 0.0
     t.index ["teacher_id"], name: "index_questions_on_teacher_id"
   end
 
@@ -204,7 +205,6 @@ ActiveRecord::Schema.define(version: 2021_04_19_145051) do
     t.string "teacher_comment"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.json "student_answers"
     t.index ["assigned_group_id"], name: "index_tasks_on_assigned_group_id"
     t.index ["student_id"], name: "index_tasks_on_student_id"
   end

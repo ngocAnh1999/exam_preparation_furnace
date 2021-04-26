@@ -5,6 +5,7 @@ class Test < ApplicationRecord
   has_many :question_tests, dependent: :destroy
   has_many :questions, through: :question_tests
   has_many :assigned_groups, dependent: :destroy
+  has_many :tasks, through: :assigned_groups
   has_many :teacher_shared_tests, dependent: :destroy
 
   enum difficulty: [:easy, :medium, :hard]
