@@ -3,12 +3,15 @@ class Students::TasksController < StudentsController
   before_action :doing_task_permission, only: %i[edit update]
   before_action :before_doing_task_permission, only: :before_doing_task
   before_action :after_doing_task_permission, only: :after_doing_task
+  before_action :view_score_permission, only: :show
 
   def index
     @tasks = current_user.tasks.includes(assigned_group: :test)
   end
 
-  def show; end
+  def show
+    @test = @task.assigned_group.test
+  end
 
   def edit
     @task.update started_at: Time.zone.now unless @task.started_at?
@@ -82,5 +85,12 @@ class Students::TasksController < StudentsController
 
     flash[:notice] = "Thời gian làm bài đã kết thúc"
     redirect_to after_doing_task_students_task_path(id: @task.id)
+  end
+
+  def view_score_permission
+    return if @task.is_published?
+
+    flash[:alert] = "Bài thi chưa được chấm"
+    redirect_to after_doing_task_students_task_path
   end
 end

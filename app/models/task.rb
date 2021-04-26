@@ -2,7 +2,7 @@ class Task < ApplicationRecord
   belongs_to :student
   belongs_to :assigned_group
 
-  delegate :test_title, :test_description, :test_start_time, :test_due_time,
+  delegate :test_title, :test_description, :test_start_time, :test_due_time, :is_published?,
     :test_doing_time, :test_unlimited_flag, to: :assigned_group
 
   def unstarted?

@@ -10,4 +10,8 @@ class AssignedGroup < ApplicationRecord
   class << self
     include BulkImportable
   end
+
+  def is_published?
+    published_at?
+  end
 end

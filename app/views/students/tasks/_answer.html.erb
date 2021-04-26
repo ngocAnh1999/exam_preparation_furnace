@@ -1,0 +1,19 @@
+<div class="form-check">
+  <label class="form-check-label">
+    <%= check_box_tag 'task[answers][][answers][][check]', ans["check"], ans["check"],
+      class: "form-check-input", disabled: true %>
+    <% if ans["is_correct"].eql?("true") && ans["check"].eql?("true") %>
+      <p class="text-success"><%= ans["content"] %></p>
+    <% elsif ans["is_correct"].blank? && ans["check"].blank? %>
+      <%= ans["content"] %>
+    <% else %>
+      <p class="text-danger"><%= ans["content"] %></p>
+    <% end %>
+    <span class="form-check-sign">
+        <span class="check"></span>
+    </span>
+  </label>
+  <% if ans["is_correct"] == "true" %>
+    <i class="material-icons text-success">task_alt</i>
+  <% end %>
+</div>
