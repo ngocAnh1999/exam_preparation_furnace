@@ -1,8 +1,10 @@
 <div class="form-check">
   <label class="form-check-label">
-    <%= check_box_tag 'task[student_answers][][answers][][check]', true, nil,
+    <%= check_box_tag 'task[answers][][answers][][check]', true, ans["check"],
       class: "form-check-input" %>
-    <%= hidden_field_tag 'task[student_answers][][answers][][answer_id]', ans["id"] %>
+    <%= hidden_field_tag 'task[answers][][answers][][id]', ans["id"] %>
+    <%= hidden_field_tag 'task[answers][][answers][][is_correct]', ans["is_correct"] %>
+    <%= hidden_field_tag 'task[answers][][answers][][content]', ans["content"] %>
     <%= ans["content"] %>
     <span class="form-check-sign">
         <span class="check"></span>

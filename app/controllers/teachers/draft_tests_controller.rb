@@ -80,6 +80,7 @@ class Teachers::DraftTestsController < TeachersController
         :content,
         :suggestion,
         :question_type,
+        :score,
         answers_attributes: [:content, :is_correct, :position]
       ]
     )

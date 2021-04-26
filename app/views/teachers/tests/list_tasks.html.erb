@@ -1,0 +1,63 @@
+<div class="form-group text-center">
+  <h3 class="text-primary"><%= @test.title %></h3>
+  <p class="text-muted"><%= @test.description %></p>
+  <div class="form-group">
+    <p>Ngày mở đề: <%= l @test.start_time, format: :default %></p>
+    <p>Hạn nộp bài: <%= l @test.due_time, format: :default %></p>
+  </div>
+</div>
+<div class="border-bottom border-sidebar my-4"></div>
+<div class="row">
+  <div class="col-md-3">
+    <h3 class="text-center">Danh sách học sinh (<%= @tasks.size %> học sinh)</h3>
+    <div id="accordion">
+      <%= render partial: "teachers/tests/collapse_group", collection: @test.assigned_groups, as: :assigned_group %>
+    </div>
+  </div>
+  <div class="col m-0">
+    <div class="form-group student-task">
+      <h3 class="text-center text-muted">Chọn một bài trong danh sách để chấm điểm</h3>
+    </div>
+    <div id="loading-svg"><div>
+  </div>
+</div>
+<script>
+  function getEditTask(me, id) {
+    $('.card-student').removeClass('bg-primary')
+    $(me).addClass('bg-primary')
+    $.ajax({
+      url: "<%= edit_task_teachers_test_path(id: @test.id) %>",
+      method: 'GET',
+      data: {
+        task_id: id
+      },
+      beforeSend: function() {
+        $('#loading-svg').html(`<%= show_svg('loading.svg') %>`);
+      },
+      success: function(response) {
+        $('#loading-svg').html("");
+        $('.student-task').html(response);
+      },
+      error: function() {
+        $('#loading-svg').html("");
+        $('.student-task').html("<h3 class='text-center'>Có một chút rắc rối nhỏ, hãy tải lại! </h3>");
+      }
+    })
+  }
+
+  function publishScore(me, id) {
+    $.ajax({
+      url: "<%= publish_score_teachers_test_path(id: @test.id) %>",
+      method: 'GET',
+      data: {
+        assigned_group_id: id
+      },
+      success: function(response) {
+        $('#accordion').html(response);
+      },
+      error: function() {
+        $(this).html(`<p class="text-danger">Có lỗi xảy ra, vui lòng tải lại trang!</p>`)
+      }
+    })
+  }
+</script>

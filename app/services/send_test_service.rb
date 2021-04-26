@@ -37,8 +37,7 @@ class SendTestService
           student_id: student_id,
           assigned_group_id: assigned_group_id,
           answers: shuffle_questions.shuffle(random: random_shuffle(student_id)),
-          task_status: 0,
-          student_answers: []
+          task_status: 0
         }
       end
     end.flatten
@@ -71,6 +70,7 @@ class SendTestService
       :suggestion,
       :question_type,
       :teacher_id,
+      :score,
       :position)
   end
 

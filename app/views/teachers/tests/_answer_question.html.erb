@@ -1,0 +1,16 @@
+<div class="form-check">
+  <label class="form-check-label">
+    <%= check_box_tag 'task[answers][][answers][][check]', true, ans["check"],
+      class: "form-check-input", disabled: true %>
+    <%= ans["content"] %>
+    <span class="form-check-sign">
+        <span class="check"></span>
+    </span>
+  </label>
+  <% if ans["is_correct"] == "true" || ans["is_correct"] == true %>
+    <i class="material-icons text-success">task_alt</i>
+  <% end %>
+  <%= hidden_field_tag 'task[answers][][answers][][id]', ans["id"] %>
+  <%= hidden_field_tag 'task[answers][][answers][][is_correct]', ans["is_correct"] %>
+  <%= hidden_field_tag 'task[answers][][answers][][content]', ans["content"] %>
+</div>
