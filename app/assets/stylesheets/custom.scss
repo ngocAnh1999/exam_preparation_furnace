@@ -1,0 +1,77 @@
+@import './constant.scss';
+
+.gutter-xs {
+  margin: 0 0.5rem;
+}
+
+.gutter-ys {
+  margin: 0.5rem 0;
+}
+
+.padding-ys {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.padding-xs {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.border-sidebar {
+  border-color: $blue-grey;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+label {
+  color: $blue-grey-primary !important;
+}
+
+.fix_label {
+  margin-bottom: 13px;
+}
+
+.material-icons.trash-color {
+  color: $dangerous;
+}
+
+.sticky-taskbar, ul.sticky-taskbar {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 8rem;
+}
+
+svg {
+  width: 8rem;
+}
+
+.manage-shared-teacher {
+  border: 1px solid $blue-grey;
+  border-radius: 5px;
+  padding: 1rem;
+}
+
+.list-shared-teacher {
+  border-left: 1px solid $blue-grey;
+}
+
+.teacher-name {
+  border: 1px solid $blue-grey;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  width: 20rem;
+  text-align: center;
+}
+.bootstrap-datetimepicker-widget{
+  z-index:99999 !important
+}
+
+.notransition {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -o-transition: none !important;
+  transition: none !important;
+}

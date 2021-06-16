@@ -1,2 +1,43 @@
 vi:
   hello: "Xin chào thế giới!"
+  select_role_register: "Đăng ký với tài khoản %{role}"
+  users:
+    type:
+      select_teacher_register: "Đăng ký với tài khoản giáo viên"
+      select_student_register: "Đăng ký với tài khoản học sinh"
+      select_school_admin_register: "Đăng ký với tài khoản trường học"
+  test:
+    difficulty:
+      easy: De
+      medium: Trung binh
+      hard: Kho
+  views:
+    pagination:
+      first: "&laquo; Đầu"
+      last: "Cuối &raquo;"
+      previous: "&lsaquo; Trước"
+      next: "Sau &rsaquo;"
+      truncate: "&hellip;"
+  teachers:
+    warning:
+      not_correct: Hãy đăng nhập với tài khoản giáo viên
+    draft_tests:
+      radio_share_test:
+        individual: Khong chia se
+        limited: Gioi han nguoi chia se
+        unlimited: Chia se cho giao vien trong truong
+  helpers:
+    page_entries_info:
+      one_page:
+        display_entries:
+          zero: "Khong co %{entry_name} duoc tim thay"
+          one: "Hien thi <b>1</b> %{entry_name}"
+          other: "Hien thi <b>tat ca %{count}</b> %{entry_name}"
+      more_pages:
+        display_entries: "Hien thi %{entry_name} <b>%{first}&nbsp;-&nbsp;%{last}</b> of <b>%{total}</b> trong tong"
+  time:
+    formats:
+      default: "%A, %d %B, %Y %I:%M:%S %p"
+  students:
+    warning:
+      not_correct: Hãy đăng nhập với tài khoản học sinh

@@ -1,10 +1,8 @@
 class ApplicationController < ActionController::Base
+  protect_from_forgery with: :exception
+
   before_action :set_locale
   before_action :configure_permitted_parameters, if: :devise_controller?
-
-  before_action :authenticate_user!
-
-  def index; end
 
   def set_locale
     locale = params[:locale].to_s.strip.to_sym
@@ -18,8 +16,26 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def authenticate_user!
+    redirect_to new_user_session_path, notice: "Bạn chưa đăng nhập!" unless user_signed_in?
+  end
+
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:username, :first_name, :last_name, :email, :phone])
+  end
 
+  def configure_permitted_parameters
+    added_attrs = [
+      :username,
+      :first_name,
+      :last_name,
+      :email,
+      :phone,
+      :password,
+      :password_confirmation,
+      :remember_me]
+    devise_parameter_sanitizer.permit :sign_up, keys: added_attrs
+    devise_parameter_sanitizer.permit :sign_in, keys: [:username, :password]
+    # TODO: backlist whitelist in user model
   end
 end

@@ -1,0 +1,11 @@
+en:
+  activerecord:
+    attributes:
+      test:
+        teacher: Teacher
+    errors:
+      models:
+        test:
+          attributes:
+            teacher:
+              required: "must exist"

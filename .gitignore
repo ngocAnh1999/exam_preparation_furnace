@@ -44,3 +44,13 @@ yarn-debug.log*
 
 # Ignore application configuration
 /config/application.yml
+
+config/settings.local.yml
+config/settings/*.local.yml
+config/environments/*.local.yml
+
+test/fixtures/*.yml
+
+app/uploaders/*
+public/uploads/ckeditor/pictures/*
+.vscode/*

@@ -1,0 +1,19 @@
+<% if question['question_type'].eql?(Settings.question.type.essay.to_s) || question['question_type'].nil? %>
+  <div class="question-item essay">
+    <div class="form-group">
+      <p class="title-question"></p>
+      <div class="form-group">
+        <label>Điểm số:</label>
+        <%= text_area_tag 'draft_test[questions][][score]', question['score'] %>
+      </div>
+      <%= text_area_tag 'draft_test[questions][][content]', question['content'],
+        class: "form-control question-content ckeditor" %>
+      <%= hidden_field_tag 'draft_test[questions][][question_type]', Settings.question.type.essay %>
+    </div>
+    <div class="form-group">
+      <label for="suggestion">Gợi ý đáp án</label>
+      <%= text_area_tag 'draft_test[questions][][suggestion]', question['suggestion'],
+        class: "form-control ckeditor" %>
+    </div>
+  </div>
+<% end %>

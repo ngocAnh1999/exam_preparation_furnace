@@ -1,0 +1,16 @@
+<div class="input-group">
+  <div class="form-check-inline">
+    <label class="form-check-label pl-0">
+      <%= check_box_tag 'draft_test[questions][][answers_attributes][][is_correct]',
+        answer['is_correct'], answer['is_correct'].present?,
+        class: "form-check-input" %>
+      <span class="form-check-sign">
+        <span class="check"></span>
+      </span>
+    </label>
+  </div>
+  <%= text_field_tag 'draft_test[questions][][answers_attributes][][content]', answer['content'],
+    class: "form-control", id: "answer_content" %>
+  <i class="material-icons cursor-pointer p-2"
+    onclick="DeleteAnswer(this);">backspace</i>
+</div>

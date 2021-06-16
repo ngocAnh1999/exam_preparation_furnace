@@ -1,0 +1,11 @@
+<% if question["question_type"].eql? Settings.question.type.essay %>
+<div class="form-group" id="question_<%= question['id'] %>">
+  <h4><span class="question-title"></span>(<%= question['score'] %> điểm): <%= question["content"] %></h4>
+  <%= hidden_field_tag 'task[answers][][id]', question['id'] %>
+  <%= hidden_field_tag 'task[answers][][content]', question['content'] %>
+  <%= hidden_field_tag 'task[answers][][suggestion]', question['suggestion'] %>
+  <%= hidden_field_tag 'task[answers][][question_type]', question['question_type'] %>
+  <%= hidden_field_tag 'task[answers][][score]', question['score'] %>
+  <p>Trả lời:</p>
+  <%= text_area_tag 'task[answers][][text_answer]', question['text_answer'], class: "form-control" %>
+<% end %>

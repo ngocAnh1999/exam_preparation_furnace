@@ -1,0 +1,15 @@
+vi:
+  activerecord:
+    attributes:
+      test:
+        teacher: Giáo viên
+        title: Tiêu đề
+        start_time: Thời gian mở đề
+        due_time: Hạn nộp bài
+        doing_time: Thời gian làm bài
+    errors:
+      models:
+        test:
+          attributes:
+            teacher:
+              required: "bắt buộc phải tồn tại"

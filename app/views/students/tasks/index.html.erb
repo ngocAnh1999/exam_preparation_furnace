@@ -1,0 +1,73 @@
+<div class="form-inline">
+  <div class="form-group">
+    <input type="text" class="form-control" placeholder="Search">
+  </div>
+  <button class="btn btn-fab btn-white btn-round">
+    <i class="material-icons text-primary">search</i>
+  </button>
+</div>
+<div class="gutter-ys">
+  <ul class="nav nav-pills nav-pills-primary px-0 pb-2 border-bottom" role="tablist">
+    <li class="nav-item">
+      <%= link_to "Đề chưa làm", "#unsubmitted_task", class: "nav-link active",
+        id: "nav-unsubmitted-task", role: "tab", "data-toggle": "tab" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to "Đề đã làm", "#submitted_task", id: "nav-submitted-task",
+      class: "nav-link", role: "tab", "data-toggle": "tab" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to "Đề quá hạn", "#expired_task", class: "nav-link", role: "tab",
+        id: "nav-expired-task", "data-toggle": "tab" %>
+    </li>
+  </ul>
+  <div class="tab-content tab-space">
+    <div class="tab-pane active" id="unsubmitted_task">
+      <div class="row">
+        <%= render partial: "task", collection: @tasks, as: :task,
+          locals: {task_status: Settings.task.status.unsubmitted} %>
+      </div>
+    </div>
+    <div class="tab-pane" id="submitted_task">
+      <div class="row">
+        <%= render partial: "task", collection: @tasks, as: :task,
+          locals: {task_status: Settings.task.status.submitted} %>
+      </div>
+    </div>
+    <div class="tab-pane" id="expired_task">
+      <%= render partial: "task", collection: @tasks, as: :task,
+        locals: {task_status: Settings.task.status.expired} %>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(function() {
+    blankUnsubmittedTask();
+  })
+  $('#nav-unsubmitted-task').on('click', () => blankUnsubmittedTask())
+
+  function blankUnsubmittedTask() {
+    if ($('#unsubmitted_task .row').children('.task-item').length == 0) {
+      $('#unsubmitted_task').html(
+        `<h2 class="text-center text-mute">Bạn chưa có đề mới ^.^</h2>`
+      )
+    }
+  }
+
+  $('#nav-submitted-task').on('click', function() {
+    if ($('#submitted_task .row').children('.task-item').length == 0) {
+      $('#submitted_task').html(
+        `<h2 class="text-center text-mute">Bạn chưa có đề nào hoàn thành.</h2>`
+      )
+    }
+  })
+
+  $('#nav-expired-task').on('click', function() {
+    if ($('#expired_task .row').children('.task-item').length == 0) {
+      $('#expired_task').html(
+        `<h2 class="text-center text-mute">Bạn chưa có đề nào quá hạn.</h2>`
+      )
+    }
+  })
+</script>

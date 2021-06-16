@@ -1,0 +1,120 @@
+<script>
+  var intervalAutoSubmit = setAutoSubmit();
+  $(function() {
+    $.ajaxSetup({
+      headers:
+        {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+    });
+    <% if have_type_questions?(@draft_test, Settings.question.type.multiple_choice) %>
+      addHeader('multichoice');
+    <% end %>
+    <% if have_type_questions?(@draft_test, Settings.question.type.essay) %>
+      addHeader('essay');
+    <% end %>
+    handleQuestionTitle();
+    intervalAutoSubmit;
+  })
+
+  function setAutoSubmit(){
+    i = setInterval(() => $('#submit-draft').click(), 3000);
+    return i;
+  }
+
+  function stopAutoSubmit() {
+    clearInterval(intervalAutoSubmit);
+  }
+
+  $('.new-test', '#link-to-back-path').on('click', () => stopAutoSubmit());
+
+  $('.datetimepicker').datetimepicker({
+    icons: {
+      time: "fa fa-clock-o",
+      date: "fa fa-calendar",
+      up: "fa fa-chevron-up",
+      down: "fa fa-chevron-down",
+      previous: 'fa fa-chevron-left',
+      next: 'fa fa-chevron-right',
+      today: 'fa fa-screenshot',
+      clear: 'fa fa-trash',
+      close: 'fa fa-remove'
+    }
+  });
+
+  $('.add-multi-choice').on('click', function() {
+    addHeader('multichoice');
+    let content_id = "content_<%= secure_random_id %>"
+    $('#multi-choice-question-partial').append(
+      `<%= j render "form_multichoice_question", question: {} %>`.replace(
+        "draft_test_questions__content", content_id
+      )
+    );
+    handleQuestionTitle();
+  })
+
+  $('.add-essay').on('click', function() {
+    addHeader('essay');
+    let content_id = "content_<%= secure_random_id %>"
+    let suggest_id = "suggest_<%= secure_random_id %>"
+    $('#essay-question-partial').append(
+      `<%= j render "form_essay_question", question: {} %>`.replace(
+        "draft_test_questions__content", content_id
+      ).replace("draft_test_questions__suggestion", suggest_id)
+    );
+    handleQuestionTitle();
+  })
+
+  function AddAnswers(me) {
+    $(me).parent().children('.group-ans').append(
+      `<%= j render 'field_answer', answer: {} %>`
+    );
+  }
+
+  function DeleteAnswer(me) {
+    $(me).parent().remove();
+  }
+
+  function DeleteQuestion(me) {
+    $('#modal_delete_question').modal({backdrop: false});
+    let secure_rand = "delete_<%= secure_random_id %>"
+    $(me).closest('.question-item').attr('id', secure_rand)
+    $('#submit-delete').attr('onclick', `confirmDeleteQuestion('#${secure_rand}')`);
+    $('#modal_delete_question .modal-body').html(
+      `<p>Bạn có chắc muốn xóa câu hỏi ${$(me).parents('.form-group').children('.question-content').val()}</p>`
+    )
+  }
+
+  function confirmDeleteQuestion(me) {
+    $(me).remove();
+    handleQuestionTitle();
+
+    if($('.multiple-choice').length == 0) {
+      $('.title-multichoice').addClass('d-none');
+    }
+
+    if($('.essay').length == 0) {
+      $('.title-essay').addClass('d-none');
+    }
+
+    $('#modal_delete_question').modal('hide');
+  }
+
+  function handleQuestionTitle() {
+    $('#list-question-card').html("");
+    $.each($('p.title-question'), function(index, element) {
+      $(element).html(
+        `<h4 class="d-flex">Câu ${index+1}:
+          <i class="material-icons trash-color cursor-pointer"
+          onclick="DeleteQuestion(this);">delete_forever</i></h4>`
+      )
+      $('#list-question-card').append(
+        `<%= link_to "#", class: "btn btn-fab btn-round btn-white mr-1" do %>
+          ${index+1}
+        <% end %>`
+      )
+    })
+  }
+
+  function addHeader(type) {
+    $(`.title-${type}.d-none`).removeClass('d-none');
+  }
+</script>

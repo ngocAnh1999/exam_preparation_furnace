@@ -1,0 +1,11 @@
+<% if question["question_type"].eql? Settings.question.type.multiple_choice %>
+  <div class="form-group" id="question_<%= question['id'] %>">
+    <h4><span class="question-title"></span>: <%= question["content"] %></h4>
+    <%= hidden_field_tag 'task[answers][][id]', question['id'] %>
+    <%= hidden_field_tag 'task[answers][][content]', question['content'] %>
+    <%= hidden_field_tag 'task[answers][][question_type]', question['question_type'] %>
+    <div class="ml-3">
+      <%= render partial: "students/tasks/answer_question", collection: question["answers"], as: :ans %>
+    </div>
+  </div>
+<% end %>
